@@ -1,0 +1,8 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend for ConvoApp",
+  "main": "core.js",
+  "author": "Yassinos-Coder",
+  "license": "MIT"
+}
