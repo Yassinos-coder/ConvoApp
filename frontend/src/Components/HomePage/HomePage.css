@@ -147,3 +147,69 @@
 .btn2:active {
   scale: 0.95;
 }
+
+.spanChat {
+    background-color: #333;
+    color: white;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.appLogoHomePage {
+    margin-top: 300px;
+    margin-left: 200px;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.main {
+    display: flex;
+    gap: 200px;
+}
+
+.text {
+    background-color: #333;
+    width: 700px;
+    margin-top: 300px;
+    color: white;
+    border-radius: 50px;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.text > h2 {
+    position: relative;
+    top: 25px;
+    font-weight: bold;
+}
+
+.text > p {
+    font-size: 20px;
+    position: relative;
+    top: 40px;
+    left: 15px;
+    line-height: 40px;
+}
+
+footer {
+    background-color: black;
+    margin-top: 153px;
+    height: 10vh;
+    color: white;
+    text-align: center;
+}
+
+footer > h1 {
+    position: relative;
+    top: 20px;
+    font-size: 2em;
+}
+
+footer > h1 > a {
+    text-decoration: none;
+    color: red;
+}
+
+footer > h1 > a:visited {
+    color: none;
+}
