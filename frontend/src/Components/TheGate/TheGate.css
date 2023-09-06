@@ -1,0 +1,118 @@
+.TheGate {
+  background: url(../../Assets/Images/bg.jpg);
+  height: 100vh;
+  background-size: cover;
+}
+
+.appLogoGate {
+  position: relative;
+  width: 50%;
+  margin: auto;
+}
+
+.appLogoGateIMG {
+  position: relative;
+  left: 100px;
+  width: 700px;
+}
+
+.userBox {
+  display: flex;
+  background-color: white;
+  margin: auto;
+  width: 40%;
+  border-radius: 50px;
+  height: 40vh;
+}
+
+.signup {
+  position: relative;
+  left: 50px;
+  top: 30px;
+}
+
+.signup > h2 {
+  position: relative;
+  text-align: center;
+  top: -10px;
+}
+
+.input {
+  max-width: 280px;
+  height: 44px;
+  background-color: #05060f0a;
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+  margin-bottom: 5px;
+  border: 2px solid transparent;
+  font-size: 1rem;
+  transition: border-color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s,
+    color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s,
+    background 0.2s cubic-bezier(0.25, 0.01, 0.25, 1) 0s;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #05060f99;
+  transition: color 0.3s cubic-bezier(0.25, 0.01, 0.25, 1) 0s;
+}
+
+.input:hover,
+.input:focus,
+.input-group:hover .input {
+  outline: none;
+  border-color: #05060f;
+}
+
+.input-group:hover .label,
+.input:focus {
+  color: #05060fc2;
+}
+
+.btnSignUp {
+  position: relative;
+  width: 170px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+  top: 20px;
+  left: 25px;
+}
+
+.btnSignUp:hover {
+  background-color: white;
+  color: #3fbac2;
+  border: 2px solid black;
+}
+
+.btnSignUp:active {
+  scale: 0.95;
+}
+
+.hr {
+  position: relative;
+  top: 50px;
+  left: 150px;
+  height: 300px;
+  width: 3px;
+  background-color: black;
+}
+
+.signin > h2 {
+  position: relative;
+  text-align: center;
+  top: -10px;
+}
+
+.signin {
+  position: relative;
+  left: 250px;
+  top: 30px;
+}

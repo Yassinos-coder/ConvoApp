@@ -2,8 +2,10 @@ import "./HomePage.css";
 import React from "react";
 import appLogo from "../../Assets/Images/appLogo.png";
 import appLogoFull from "../../Assets/Images/appLogoFull.png";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate()
   return (
     <div className="HomePage">
       <div className="header">
@@ -17,11 +19,11 @@ const HomePage = () => {
           <div className="actions">
             {localStorage.getItem("user_status") === "connected" ? (
               <>
-                <button className="btn btnDashHeader"></button>
+                <button className="btn btnDashHeader" ></button>
               </>
             ) : (
               <>
-                <button className="btn btnGateHeader"></button>
+                <button className="btn btnGateHeader" onClick={()=> {navigate('./TheGate')}}></button>
               </>
             )}
             <button className="btn2">Report Bugs</button>
