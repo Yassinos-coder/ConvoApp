@@ -19,7 +19,7 @@ const HomePage = () => {
           <div className="actions">
             {localStorage.getItem("user_status") === "connected" ? (
               <>
-                <button className="btn btnDashHeader" ></button>
+                <button className="btn btnDashHeader" onClick={()=> {navigate(`/Dashboard/${localStorage.uuid}`)}}></button>
               </>
             ) : (
               <>

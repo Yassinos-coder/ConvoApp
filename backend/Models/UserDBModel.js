@@ -14,6 +14,10 @@ const UserDBModel = mongoose.Schema({
         type: String,
         required: true 
     },
+    user_presence : {
+        type: String,
+        required: false
+    },
     password: {
         type: String,
         required: true

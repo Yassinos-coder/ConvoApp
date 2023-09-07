@@ -1,0 +1,136 @@
+.Dashboard {
+  background: url(../../Assets/Images/bg.jpg);
+  height: 100vh;
+  background-size: cover;
+}
+
+.Body {
+  background-color: rgba(255, 255, 255, 1);
+  position: relative;
+  margin: auto;
+  border-radius: 20px;
+  width: 80%;
+  height: 70vh;
+  top: 100px;
+  display: flex;
+}
+
+.leftBar {
+  position: relative;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  height: 70vh;
+  width: 350px;
+  border-right: 2px solid black;
+}
+
+.rightBar {
+  position: relative;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  height: 70vh;
+  width: 100%;
+}
+
+.LeftBarHeader {
+  position: relative;
+  height: 15vh;
+  border-top-left-radius: 20px;
+  border-bottom: 2px solid black;
+}
+
+.LeftBarheaderContent {
+  display: flex;
+  position: relative;
+  top: 10px;
+  left: 10px;
+  gap: 10px;
+}
+
+.userLogo > img {
+  width: 70px;
+  cursor: pointer;
+}
+
+.username > p {
+  font-size: 20px;
+  position: relative;
+  top: 25px;
+}
+
+.userDetailsData {
+  position: relative;
+  width: 100%;
+  height: 5vh;
+  top: 20px;
+  display: flex;
+}
+
+.onlineStatus {
+  position: relative;
+  background-color: rgba(128, 128, 128, 0.5);
+  font-size: 17px;
+  border-radius: 500px;
+  left: 5px;
+  width: 100px;
+  height: 30px;
+  top: 10px;
+}
+
+.onlineStatus > p {
+  text-align: center;
+  position: relative;
+  top: 0px;
+}
+
+.GoDotFill {
+    position: relative;
+    font-size: 20px;
+    top: 5px;
+}
+
+.settingsBtn {
+  position: relative;
+  background-color: rgba(128, 128, 128, 0.5);
+  font-size: 20px;
+  border-radius: 500px;
+  left: 15px;
+  width: 40px;
+  height: 30px;
+  top: 10px;
+}
+
+.settingsBtn > .FiSettings {
+  position: relative;
+  left: 10px;
+  top: 5px;
+}
+
+.settingsBtn:hover {
+  cursor: pointer;
+  scale: 1.1;
+  color: yellow;
+}
+
+.logout {
+  position: relative;
+  background-color: rgba(128, 128, 128, 0.5);
+  font-size: 20px;
+  border-radius: 500px;
+  left: 25px;
+  width: 40px;
+  height: 30px;
+  top: 10px;
+}
+
+.logout > .BiLogOut {
+  position: relative;
+  left: 10px;
+  top: 5px;
+}
+
+.logout:hover {
+  cursor: pointer;
+  scale: 1.1;
+  color: red;
+}

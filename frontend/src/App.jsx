@@ -1,23 +1,28 @@
-import './App.css'
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import HomePage from './Components/HomePage/HomePage';
-import { useEffect } from 'react';
-import TheGate from './Components/TheGate/TheGate';
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./Components/HomePage/HomePage";
+import { useEffect } from "react";
+import TheGate from "./Components/TheGate/TheGate";
+import PrivateRoutes from "./PrivateRoutes";
+import Dashboard from "./Components/Dashboard/Dashboard";
 
 function App() {
-
   useEffect(() => {
-    localStorage.setItem('app_name', 'ConvoChat')
-    localStorage.setItem('user_status', 'disconnected')
-    localStorage.setItem('user_agent', navigator.userAgent)
-  },[])
+    localStorage.setItem("app_name", "ConvoChat");
+    localStorage.setItem("user_agent", navigator.userAgent);
+  }, []);
 
   return (
     <div className="App">
       <BrowserRouter>
         <Routes>
           <Route index element={<HomePage />} />
-          <Route path='/TheGate' element={<TheGate />} />
+          <Route path="/TheGate" element={<TheGate />} />
+          <Route element={<PrivateRoutes />}>
+            <Route path="/Dashboard/:uuid/" element={<Dashboard />}>
+
+            </Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

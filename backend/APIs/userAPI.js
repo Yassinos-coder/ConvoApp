@@ -16,6 +16,8 @@ userAPI.post('/users/newUserCreation', async(req, res) => {
                 message: 'usernameTaken'
             })
         } else {
+            newUserData.username = newUserData.username.toLowerCase()
+            newUserData.email = newUserData.email.toLowerCase()
             newUserData.password = bcrypt.hashSync(newUserData.password, SaltRounds)
             const addUser = new UserModel(newUserData)
             const userData = await addUser.save()
@@ -28,6 +30,37 @@ userAPI.post('/users/newUserCreation', async(req, res) => {
         console.error(`Error in newUserCreation API => ${err}`)
         res.send({
             message: 'ErrorTryAgain'
+        })
+    }
+})
+
+userAPI.post('/users/login', async(req,res) => {
+    let loginData = req.body
+    try {
+        const  DoesUserAlreadyExists = await UserModel.findOne({username: loginData.username})
+        if (DoesUserAlreadyExists) {
+            let result = bcrypt.compareSync(loginData.password, DoesUserAlreadyExists.password)
+            let userToken = jwt.sign(DoesUserAlreadyExists.date_of_creation, process.env.SECRET_SERVICE)
+            if (result) {
+                await UserModel.updateOne({_id: DoesUserAlreadyExists._id}, {user_presence: 'Online'})
+                res.send({
+                    userData: DoesUserAlreadyExists,
+                    giveAccess: result,
+                    userToken : userToken, 
+                })
+            } else {
+                res.send({message: 'wrongPass!'})
+            }
+        } else {
+            res.send({
+                message: 'userNoExist'
+            })
+        }
+
+    } catch (err) {
+        console.log(`Error in Login API ${err}`)
+        res.send({
+            message:'ErrorTryAgain'
         })
     }
 })

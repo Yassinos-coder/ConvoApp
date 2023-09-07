@@ -4,12 +4,14 @@ import { useState } from "react";
 import SignupModal from "../../Modals/SignupModal";
 import LoginModal from "../../Modals/LoginModal";
 import { useDispatch } from "react-redux";
-import { AddNewUser } from "../../Redux/UserReducer";
+import { AddNewUser, UserLogin } from "../../Redux/UserReducer";
+import { useNavigate } from "react-router-dom";
 
 const TheGate = () => {
   const [newUser, setNewUser] = useState(new SignupModal());
   const [newLogin, SetNewLogin] = useState(new LoginModal());
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const CreateAccount = () => {
     dispatch(AddNewUser({ newUser: newUser }))
@@ -20,8 +22,29 @@ const TheGate = () => {
           alert("Reload Page and Try Again !");
         } else {
           alert("User Created !");
-          localStorage.setItem('uuid', data.payload.userData._id)
-          localStorage.setItem('username', data.payload.userData.username)
+          localStorage.setItem("uuid", data.payload.userData._id);
+          localStorage.setItem("username", data.payload.userData.username);
+        }
+      })
+      .catch((err) => {
+        console.warn(`Error in CreateAccount Dispatch ${err}`);
+      });
+  };
+
+  const Login = () => {
+    dispatch(UserLogin({ loginData: newLogin }))
+      .then((data) => {
+        if (data.payload.giveAccess === true) {
+          localStorage.setItem("user_status", "connected");
+          localStorage.setItem("bigKey", data.payload.userToken);
+          localStorage.setItem("uuid", data.payload.userData._id);
+          localStorage.setItem("username", data.payload.userData.username);
+          localStorage.setItem('user_presence', 'Online')
+          navigate(`/Dashboard/${localStorage.getItem("uuid")}`);
+        } else if (data.payload.message === "wrongPass!") {
+          alert("Wrong Password Try Again !");
+        } else if (data.payload.message === "ErrorTryAgain") {
+          alert("Reload Page and Try Again !");
         }
       })
       .catch((err) => {
@@ -58,7 +81,11 @@ const TheGate = () => {
               type="email"
               onChange={(e) => {
                 let date = new Date();
-                setNewUser({ ...newUser, email: e.currentTarget.value, date_of_creation: date });
+                setNewUser({
+                  ...newUser,
+                  email: e.currentTarget.value,
+                  date_of_creation: date,
+                });
               }}
             />
           </div>
@@ -105,7 +132,14 @@ const TheGate = () => {
               }
             />
           </div>
-          <button className="btnSignUp">Log In </button>
+          <button
+            className="btnSignUp"
+            onClick={() => {
+              Login();
+            }}
+          >
+            Log In{" "}
+          </button>
         </div>
       </div>
     </div>
