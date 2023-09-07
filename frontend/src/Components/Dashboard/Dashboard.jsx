@@ -60,6 +60,9 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          <div className="FriendsList">
+            <h3>Friends List : </h3>
+          </div>
         </div>
         <div className="rightBar">
           <Outlet />

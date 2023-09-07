@@ -1,0 +1,104 @@
+.ConvoDash {
+    width: 100%;
+    position: relative;
+}
+
+.headerConvoDash {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    border-top-right-radius: 20px;
+    border-bottom: 1px solid black;
+}
+
+.friendLogo {
+    position: relative;
+    top: 10px;
+    left: 25px;
+}
+
+.friendLogo > img {
+    width: 60px;
+}
+
+.friendName > h3 {
+    position: relative;
+    top: 30px;
+    left: 40px;
+}
+
+.friendActions {
+    position: relative;
+    left: 900px;
+    display: flex;
+    gap: 10px;
+}
+
+.deleteFriend {
+    position: relative;
+    background-color: rgba(128, 128, 128, 0.5);
+    font-size: 20px;
+    border-radius: 500px;
+    left: 25px;
+    width: 40px;
+    height: 30px;
+    top: 25px;
+}
+
+.FaTrashAlt {
+    position: relative;
+    top: 5px;
+    left: 10px;
+}
+
+.deleteFriend:hover  {
+    color: red;
+    scale: 1.1;
+    cursor: pointer;
+}
+
+.voiceCall {
+    position: relative;
+    background-color: rgba(128, 128, 128, 0.5);
+    font-size: 20px;
+    border-radius: 500px;
+    left: 25px;
+    width: 40px;
+    height: 30px;
+    top: 25px;
+}
+
+.voiceCall:hover  {
+    color: greenyellow;
+    scale: 1.1;
+    cursor: pointer;
+}
+
+.IoIosCall {
+    position: relative;
+    top: 5px;
+    left: 10px;
+}
+
+.videoCall {
+    position: relative;
+    background-color: rgba(128, 128, 128, 0.5);
+    font-size: 20px;
+    border-radius: 500px;
+    left: 25px;
+    width: 40px;
+    height: 30px;
+    top: 25px;
+}
+
+.videoCall:hover  {
+    color: orange;
+    scale: 1.1;
+    cursor: pointer;
+}
+
+.MdVideoCall {
+    position: relative;
+    top: 5px;
+    left: 10px;
+}
