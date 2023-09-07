@@ -3,11 +3,13 @@ import React from "react";
 import appLogo from "../../Assets/Images/appLogo.png";
 import appLogoFull from "../../Assets/Images/appLogoFull.png";
 import { useNavigate } from "react-router-dom";
+import Notification from "../../Helpers/Notification";
 
 const HomePage = () => {
   const navigate = useNavigate()
   return (
     <div className="HomePage">
+      <Notification message='Welcome to Convo' type='info'/>
       <div className="header">
         <div className="headerContent">
           <div className="title">

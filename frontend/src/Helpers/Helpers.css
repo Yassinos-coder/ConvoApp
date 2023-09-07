@@ -1,0 +1,57 @@
+body {
+  overflow: hidden;
+}
+
+.Notification {
+  position: absolute;
+  background-color: white;
+  border-radius: 50px;
+  width: 400px;
+  max-width: 400px;
+  max-height: 5vh;
+  height: 5vh;
+  margin-top: 880px;
+  margin-left: 1500px;
+  color: black;
+  z-index: 1;
+  display: flex;
+  font-size: 17px;
+  animation: popUp 0.5s ease-out forwards;
+  transform: translateY(100%);
+}
+
+@keyframes popUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.icon {
+    width: 80px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-right: 2px solid rgba(128, 128, 128, 0.3);
+}
+
+.messageBox {
+    width: 100%;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.messageBox > p {
+    position: relative;
+    font-size: 18px;
+    top: 10px;
+    left: 15px;
+}
+
+.iconIcon {
+    font-size: 1.8em;
+    position: relative;
+    left: 20px;
+    top: 5px;
+}
