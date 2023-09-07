@@ -9,8 +9,6 @@ function App() {
   useEffect(() => {
     localStorage.setItem('app_name', 'ConvoChat')
     localStorage.setItem('user_status', 'disconnected')
-    localStorage.setItem('uuid', 'none')
-    localStorage.setItem('username', 'none')
     localStorage.setItem('user_agent', navigator.userAgent)
   },[])
 

@@ -3,6 +3,8 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const fileUpload = require('express-fileupload')
 
+const userAPIs = require('./APIs/userAPI')
+
 require('dotenv').config()
 
 const app = express()
@@ -20,3 +22,5 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
     db_connection_success = false
     console.warn('Database connection error:', error.message);
 });
+
+app.use(userAPIs)
