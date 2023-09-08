@@ -10,7 +10,7 @@ import { BsPersonFillAdd } from "react-icons/bs";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [AddFriendToggle, setAddFriendToggle] = useState(true);
+  const [AddFriendToggle, setAddFriendToggle] = useState(false);
 
   const logout = async () => {
     try {
@@ -28,7 +28,10 @@ const Dashboard = () => {
 
   return (
     <div className="Dashboard">
-      <div className="AddFriend" style={AddFriendToggle ? {} : {display:'none'}}>
+      <div
+        className="AddFriend"
+        style={AddFriendToggle ? {} : { display: "none" }}
+      >
         <div className="addfriendInput">
           <input type="text" name="friendInput" placeholder="Ex: Yassinos" />
         </div>

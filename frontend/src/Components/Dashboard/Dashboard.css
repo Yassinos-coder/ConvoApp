@@ -160,7 +160,7 @@
   background-color: white;
   border-radius: 25px;
   width: 500px;
-  height: 20vh;
+  height: 9vh;
   margin-top: 250px;
   margin-left: 750px;
   z-index: 1;
@@ -216,6 +216,6 @@
   cursor: pointer;
 }
 
-.addBtn > button:active {
-  
+.addBtn > button:hover {
+  background-color: greenyellow;
 }
