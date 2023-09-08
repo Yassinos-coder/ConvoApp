@@ -3,15 +3,21 @@ import appLogoNoBG from "../../Assets/Images/appLogoNoBG.png";
 import { useState } from "react";
 import SignupModal from "../../Modals/SignupModal";
 import LoginModal from "../../Modals/LoginModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AddNewUser, UserLogin } from "../../Redux/UserReducer";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../Helpers/Loader";
+import Notification from "../../Helpers/Notification";
 
 const TheGate = () => {
-  const [newUser, setNewUser] = useState(new SignupModal());
-  const [newLogin, SetNewLogin] = useState(new LoginModal());
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [newUser, setNewUser] = useState(new SignupModal());
+  const [newLogin, SetNewLogin] = useState(new LoginModal());
+  const [userCreatedSuccess, setCreationResult] = useState(false);
+  const [wrongPass, setNotifWrongPass] = useState(false);
+  const [systemError, setSysError] = useState(false);
+  const requestStatus = useSelector((state) => state.UserReducer.status);
 
   const CreateAccount = () => {
     dispatch(AddNewUser({ newUser: newUser }))
@@ -21,7 +27,7 @@ const TheGate = () => {
         } else if (data.payload.message === "ErrorTryAgain") {
           alert("Reload Page and Try Again !");
         } else {
-          alert("User Created !");
+          setCreationResult(true);
           localStorage.setItem("uuid", data.payload.userData._id);
           localStorage.setItem("username", data.payload.userData.username);
         }
@@ -39,12 +45,12 @@ const TheGate = () => {
           localStorage.setItem("bigKey", data.payload.userToken);
           localStorage.setItem("uuid", data.payload.userData._id);
           localStorage.setItem("username", data.payload.userData.username);
-          localStorage.setItem('user_presence', 'Online')
+          localStorage.setItem("user_presence", "Online");
           navigate(`/Dashboard/${localStorage.getItem("uuid")}`);
         } else if (data.payload.message === "wrongPass!") {
-          alert("Wrong Password Try Again !");
+          setNotifWrongPass(true);
         } else if (data.payload.message === "ErrorTryAgain") {
-          alert("Reload Page and Try Again !");
+          setSysError(true)
         }
       })
       .catch((err) => {
@@ -54,6 +60,24 @@ const TheGate = () => {
 
   return (
     <div className="TheGate">
+      {userCreatedSuccess ? (
+        <Notification message="Account Created Successfuly !" type="success" />
+      ) : (
+        ""
+      )}
+      {wrongPass ? (
+        <Notification message="Wrong Password Try Again!" type="danger" />
+      ) : (
+        ""
+      )}
+      {systemError ? (
+        <Notification
+          message="Please Reload Page and Try Again!"
+          type="danger"
+        />
+      ) : (
+        ""
+      )}
       <div className="appLogoGate">
         <img className="appLogoGateIMG" src={appLogoNoBG} alt="" />
       </div>
@@ -102,7 +126,11 @@ const TheGate = () => {
             />
           </div>
           <button className="btnSignUp" onClick={() => CreateAccount()}>
-            Create Account
+            {requestStatus === "creationPending" ? (
+              <Loader />
+            ) : (
+              "Create Account"
+            )}
           </button>
         </div>
         <hr className="hr" />
@@ -138,7 +166,7 @@ const TheGate = () => {
               Login();
             }}
           >
-            Log In{" "}
+            {requestStatus === "loginPending" ? <Loader /> : "Log In"}
           </button>
         </div>
       </div>

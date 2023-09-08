@@ -50,6 +50,7 @@
 .userLogo > img {
   width: 70px;
   cursor: pointer;
+  border-radius: 500px;
 }
 
 .username > p {

@@ -6,7 +6,7 @@ const AxiosConfig = axios.create({
 
 AxiosConfig.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('tokenKey')
+        const token = localStorage.getItem('bigKey') ? localStorage.bigKey : ''
         if (token) {
             config.headers.Authorization = `Bearer ${token}`
         }

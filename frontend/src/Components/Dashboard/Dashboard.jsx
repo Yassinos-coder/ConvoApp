@@ -5,9 +5,24 @@ import nopp from "../../Assets/Images/nopp.png";
 import { GoDotFill } from "react-icons/go";
 import { FiSettings } from "react-icons/fi";
 import { BiLogOut } from "react-icons/bi";
+import AxiosConfig from "../../Helpers/AxiosConfig";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+
+  const logout = async () => {
+    try {
+      await AxiosConfig.post(`/users/changeStatus/${localStorage.uuid}`);
+    } catch (err) {
+      console.log(`Error in LogOut: ${err.message}`);
+    }
+    localStorage.removeItem("username");
+    localStorage.removeItem("uuid");
+    localStorage.removeItem("bigKey");
+    localStorage.removeItem("user_status");
+    localStorage.setItem("user_presence", "Offline");
+    navigate("/");
+  };
 
   return (
     <div className="Dashboard">
@@ -30,7 +45,8 @@ const Dashboard = () => {
             <div className="userDetailsData">
               <div className="onlineStatus">
                 <p>
-                  <GoDotFill className="GoDotFill"
+                  <GoDotFill
+                    className="GoDotFill"
                     style={
                       localStorage.user_presence === "Online"
                         ? { color: "green" }
@@ -49,12 +65,7 @@ const Dashboard = () => {
                 <BiLogOut
                   className="BiLogOut"
                   onClick={() => {
-                    localStorage.removeItem('username')
-                    localStorage.removeItem('uuid')
-                    localStorage.removeItem('bigKey')
-                    localStorage.removeItem('user_status')
-                    localStorage.setItem('user_presence', 'Offline')
-                    navigate("/");
+                    logout();
                   }}
                 />
               </div>

@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const fs = require("fs");
 const SaltRounds = 10;
+const {Gate} = require('../Helpers/apiAUTH')
 
 const userAPI = Router()
 
@@ -58,10 +59,21 @@ userAPI.post('/users/login', async(req,res) => {
         }
 
     } catch (err) {
-        console.log(`Error in Login API ${err}`)
+        console.error(`Error in Login API ${err}`)
         res.send({
             message:'ErrorTryAgain'
         })
+    }
+})
+
+userAPI.post('/users/changeStatus/:uuid', Gate ,async(req, res) => {
+    let uuid = req.params.uuid
+    try {
+        await UserModel.updateOne({_id: uuid}, {user_presence: 'Offline'})
+        res.send({message: 'OpSuccess'})
+    } catch (err) {
+        console.error(`Error in changeStatus API ${err} `)
+        res.send({message: 'OpFailed'})
     }
 })
 

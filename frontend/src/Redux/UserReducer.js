@@ -6,7 +6,7 @@ export const AddNewUser = createAsyncThunk('users/AddNewUser', async({newUser}) 
         const response = await AxiosConfig.post('/users/newUserCreation', newUser)
         return response.data
     } catch (err) {
-        console.warn(`Error in AddNewUser Reducer ${err}`)
+        console.warn(`Error in AddNewUser Reducer ${err.message}`)
     }
 })
 
@@ -15,7 +15,7 @@ export const UserLogin = createAsyncThunk('users/UserLogin', async({loginData}) 
         const respone = await AxiosConfig.post('/users/login', loginData)
         return respone.data
     } catch (err) {
-        console.warn(`Error in UserLogin Reducer ${err}`)
+        console.warn(`Error in UserLogin Reducer ${err.message}`)
     }
 })
 
@@ -35,7 +35,7 @@ const UserReducer = createSlice({
                 state.status = action.payload.message
             })
             .addCase(AddNewUser.pending, (state, action ) => {
-                state.status = 'pending'
+                state.status = 'creationPending'
             })
             .addCase(AddNewUser.rejected, (state, action ) => {
                 state.status = action.payload.message
@@ -46,7 +46,7 @@ const UserReducer = createSlice({
                 state.status = action.payload.message
             })
             .addCase(UserLogin.pending, (state, action ) => {
-                state.status = 'pending'
+                state.status = 'loginPending'
             })
             .addCase(UserLogin.rejected, (state, action ) => {
                 state.status = action.payload.message

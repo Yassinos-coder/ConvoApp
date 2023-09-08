@@ -1,104 +1,218 @@
 .ConvoDash {
-    width: 100%;
-    position: relative;
+  width: 100%;
+  position: relative;
 }
 
 .headerConvoDash {
-    width: 100%;
-    height: 8vh;
-    display: flex;
-    border-top-right-radius: 20px;
-    border-bottom: 1px solid black;
+  width: 100%;
+  height: 8vh;
+  display: flex;
+  border-top-right-radius: 20px;
+  border-bottom: 1px solid black;
 }
 
 .friendLogo {
-    position: relative;
-    top: 10px;
-    left: 25px;
+  position: relative;
+  top: 10px;
+  left: 25px;
 }
 
 .friendLogo > img {
-    width: 60px;
+  width: 60px;
+  border-radius: 500px;
 }
 
 .friendName > h3 {
-    position: relative;
-    top: 30px;
-    left: 40px;
+  position: relative;
+  top: 30px;
+  left: 40px;
 }
 
 .friendActions {
-    position: relative;
-    left: 900px;
-    display: flex;
-    gap: 10px;
+  position: relative;
+  left: 900px;
+  display: flex;
+  gap: 10px;
 }
 
 .deleteFriend {
-    position: relative;
-    background-color: rgba(128, 128, 128, 0.5);
-    font-size: 20px;
-    border-radius: 500px;
-    left: 25px;
-    width: 40px;
-    height: 30px;
-    top: 25px;
+  position: relative;
+  background-color: rgba(128, 128, 128, 0.5);
+  font-size: 20px;
+  border-radius: 500px;
+  left: 25px;
+  width: 40px;
+  height: 30px;
+  top: 25px;
 }
 
 .FaTrashAlt {
-    position: relative;
-    top: 5px;
-    left: 10px;
+  position: relative;
+  top: 5px;
+  left: 10px;
 }
 
-.deleteFriend:hover  {
-    color: red;
-    scale: 1.1;
-    cursor: pointer;
+.deleteFriend:hover {
+  color: red;
+  scale: 1.1;
+  cursor: pointer;
 }
 
 .voiceCall {
-    position: relative;
-    background-color: rgba(128, 128, 128, 0.5);
-    font-size: 20px;
-    border-radius: 500px;
-    left: 25px;
-    width: 40px;
-    height: 30px;
-    top: 25px;
+  position: relative;
+  background-color: rgba(128, 128, 128, 0.5);
+  font-size: 20px;
+  border-radius: 500px;
+  left: 25px;
+  width: 40px;
+  height: 30px;
+  top: 25px;
 }
 
-.voiceCall:hover  {
-    color: greenyellow;
-    scale: 1.1;
-    cursor: pointer;
+.voiceCall:hover {
+  color: greenyellow;
+  scale: 1.1;
+  cursor: pointer;
 }
 
 .IoIosCall {
-    position: relative;
-    top: 5px;
-    left: 10px;
+  position: relative;
+  top: 5px;
+  left: 10px;
 }
 
 .videoCall {
-    position: relative;
-    background-color: rgba(128, 128, 128, 0.5);
-    font-size: 20px;
-    border-radius: 500px;
-    left: 25px;
-    width: 40px;
-    height: 30px;
-    top: 25px;
+  position: relative;
+  background-color: rgba(128, 128, 128, 0.5);
+  font-size: 20px;
+  border-radius: 500px;
+  left: 25px;
+  width: 40px;
+  height: 30px;
+  top: 25px;
 }
 
-.videoCall:hover  {
-    color: orange;
-    scale: 1.1;
-    cursor: pointer;
+.videoCall:hover {
+  color: orange;
+  scale: 1.1;
+  cursor: pointer;
 }
 
 .MdVideoCall {
+  position: relative;
+  top: 5px;
+  left: 10px;
+}
+
+.ConvoBody {
+  position: relative;
+  background: url(../../Assets/Images/convoBG.jpg);
+  width: 100%;
+  height: 55vh;
+  display: flex;
+  background-size: contain;
+  overflow-y: auto;
+}
+
+.messages {
     position: relative;
-    top: 5px;
-    left: 10px;
+    display: flex;
+    max-width: 600px;
+    gap: 10px;
+    height: fit-content;
+    top: 20px;
+    left: 20px;
+}
+
+.messages > .logo > img {
+    width: 50px;
+    border-radius: 500px;
+}
+
+.textMessage {
+    position: relative;
+    text-align: left;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.7);
+    color: black;
+    height: fit-content;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.ConvoFooter {
+  border-bottom-right-radius: 20px;
+  position: relative;
+  width: 100%;
+  height: 7vh;
+  border-top: 1px solid grey;
+}
+
+.inputArea {
+  position: relative;
+  margin: auto;
+  width: 95%;
+  background-color: rgba(128, 128, 128, 0.3);
+  height: 5vh;
+  border-radius: 80px;
+  top: 10px;
+  display: flex;
+}
+
+.textInput {
+  position: relative;
+  width: 90%;
+  height: 5vh;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.textInput > input {
+  width: 100%;
+  height: 5vh;
+  font-size: 17px;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding-left: 20px;
+}
+
+.textInput > input:focus {
+  background-color: whitesmoke;
+}
+
+.messageActions {
+  display: flex;
+  position: relative;
+  gap: 20px;
+  top: 5px;
+  left: -2px;
+}
+
+.BsSendFill {
+  width: 50px;
+  height: 35px;
+  padding: 2px;
+  border-radius: 20px;
+  font-size: 25px;
+}
+
+.BsSendFill:hover {
+  color: #3fbac2;
+  cursor: pointer;
+}
+
+.BsUpload {
+  width: 50px;
+  height: 35px;
+  padding: 2px;
+  border-radius: 20px;
+  font-size: 25px;
+}
+
+.BsUpload:hover {
+  color: #3fbac2;
+  cursor: pointer;
 }
