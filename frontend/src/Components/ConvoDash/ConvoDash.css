@@ -24,7 +24,7 @@
 
 .friendName > h3 {
   position: relative;
-  top: 30px;
+  top: 25px;
   left: 40px;
 }
 
@@ -114,30 +114,41 @@
   overflow-y: auto;
 }
 
+.ConvoBody > p {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: black;
+  height: fit-content;
+  padding: 2px;
+  border-radius: 5px;
+  margin-left: 550px;
+  margin-top: 2px;
+}
+
 .messages {
-    position: relative;
-    display: flex;
-    max-width: 600px;
-    gap: 10px;
-    height: fit-content;
-    top: 20px;
-    left: 20px;
+  position: relative;
+  display: flex;
+  max-width: 600px;
+  gap: 10px;
+  height: fit-content;
+  top: 30px;
+  left: 20px;
 }
 
 .messages > .logo > img {
-    width: 50px;
-    border-radius: 500px;
+  width: 50px;
+  border-radius: 500px;
 }
 
 .textMessage {
-    position: relative;
-    text-align: left;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.7);
-    color: black;
-    height: fit-content;
-    border-radius: 20px;
-    padding: 20px;
+  position: relative;
+  text-align: left;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: black;
+  height: fit-content;
+  border-radius: 20px;
+  padding: 20px;
 }
 
 .ConvoFooter {

@@ -5,8 +5,24 @@ import { FaTrashAlt } from "react-icons/fa";
 import { IoIosCall } from "react-icons/io";
 import { MdVideoCall } from "react-icons/md";
 import { BsSendFill, BsUpload } from "react-icons/bs";
+import { GoDotFill } from "react-icons/go";
 
 const ConvoDash = () => {
+  const today = new Date();
+  const hours = today.getHours();
+  const minutes = today.getMinutes();
+  const daysOfWeek = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+  const dayIndex = today.getDay();
+  const dayName = daysOfWeek[dayIndex];
+
   return (
     <div className="ConvoDash">
       <div className="headerConvoDash">
@@ -14,7 +30,17 @@ const ConvoDash = () => {
           <img src={nopp} alt="Logo" />
         </div>
         <div className="friendName">
-          <h3>mbennani</h3>
+          <h3>
+            mbennani
+            <GoDotFill
+              className="GoDotFill"
+              style={
+                localStorage.user_presence === "Online"
+                  ? { color: "green" }
+                  : { color: "red" }
+              }
+            />
+          </h3>
         </div>
         <div className="friendActions">
           <div className="voiceCall">
@@ -29,6 +55,8 @@ const ConvoDash = () => {
         </div>
       </div>
       <div className="ConvoBody">
+        <p>{`${dayName}, ${hours}:${minutes}`}</p>
+
         <div className="messages">
           <div className="logo">
             <img src={nopp} alt="" />

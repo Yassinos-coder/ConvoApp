@@ -6,6 +6,7 @@ import { GoDotFill } from "react-icons/go";
 import { FiSettings } from "react-icons/fi";
 import { BiLogOut } from "react-icons/bi";
 import AxiosConfig from "../../Helpers/AxiosConfig";
+import { BsPersonFillAdd } from "react-icons/bs";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -72,7 +73,8 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="FriendsList">
-            <h3>Friends List : </h3>
+            <h3>Friends List :  <BsPersonFillAdd className="BsPersonFillAdd"/></h3>
+           
           </div>
         </div>
         <div className="rightBar">
