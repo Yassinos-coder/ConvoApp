@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import React from "react";
+import React, { useState } from "react";
 import nopp from "../../Assets/Images/nopp.png";
 import { GoDotFill } from "react-icons/go";
 import { FiSettings } from "react-icons/fi";
@@ -10,6 +10,7 @@ import { BsPersonFillAdd } from "react-icons/bs";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [AddFriendToggle, setAddFriendToggle] = useState(true);
 
   const logout = async () => {
     try {
@@ -27,6 +28,14 @@ const Dashboard = () => {
 
   return (
     <div className="Dashboard">
+      <div className="AddFriend" style={AddFriendToggle ? {} : {display:'none'}}>
+        <div className="addfriendInput">
+          <input type="text" name="friendInput" placeholder="Ex: Yassinos" />
+        </div>
+        <div className="addBtn">
+          <button>Send Invite</button>
+        </div>
+      </div>
       <div className="Body">
         <div className="leftBar">
           <div className="LeftBarHeader">
@@ -73,8 +82,13 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="FriendsList">
-            <h3>Friends List :  <BsPersonFillAdd className="BsPersonFillAdd"/></h3>
-           
+            <h3>
+              Friends List :{" "}
+              <BsPersonFillAdd
+                className="BsPersonFillAdd"
+                onClick={() => setAddFriendToggle(true)}
+              />
+            </h3>
           </div>
         </div>
         <div className="rightBar">
