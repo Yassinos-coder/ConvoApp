@@ -7,9 +7,15 @@ import { FiSettings } from "react-icons/fi";
 import { BiLogOut } from "react-icons/bi";
 import AxiosConfig from "../../Helpers/AxiosConfig";
 import { BsPersonFillAdd } from "react-icons/bs";
+import { AiOutlineClose } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import AddFriendModal from "../../Modals/AddFriendModal";
+import { AddFriend } from "../../Redux/FriendsReducer";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [friendData, setFriendData] = useState(new AddFriendModal());
   const [AddFriendToggle, setAddFriendToggle] = useState(false);
 
   const logout = async () => {
@@ -26,17 +32,32 @@ const Dashboard = () => {
     navigate("/");
   };
 
+  const SendAddFriend = () => {
+    dispatch(AddFriend({friendData: friendData})).then((data) => {
+      
+    });
+  };
+
   return (
     <div className="Dashboard">
       <div
         className="AddFriend"
         style={AddFriendToggle ? {} : { display: "none" }}
       >
+        <AiOutlineClose
+          onClick={() => setAddFriendToggle(false)}
+          className="AiOutlineClose"
+        />
         <div className="addfriendInput">
-          <input type="text" name="friendInput" placeholder="Ex: Yassinos" />
+          <input
+            type="text"
+            name="friendInput"
+            placeholder="Ex: Yassinos"
+            onChange={(e) => setFriendData({ ...friendData, owner: localStorage.uuid, friend: e.currentTarget.value})}
+          />
         </div>
         <div className="addBtn">
-          <button>Send Invite</button>
+          <button onClick={SendAddFriend}>Send Invite</button>
         </div>
       </div>
       <div className="Body">
@@ -89,7 +110,10 @@ const Dashboard = () => {
               Friends List :{" "}
               <BsPersonFillAdd
                 className="BsPersonFillAdd"
-                onClick={() => setAddFriendToggle(true)}
+                onClick={
+                  AddFriendToggle ? undefined : () => setAddFriendToggle(true)
+                }
+                style={AddFriendToggle ? { cursor: "not-allowed" } : {}}
               />
             </h3>
           </div>

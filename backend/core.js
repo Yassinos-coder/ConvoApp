@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const fileUpload = require('express-fileupload')
 
 const userAPIs = require('./APIs/userAPI')
+const friendAPIs = require('./APIs/friendsAPI')
 
 require('dotenv').config()
 
@@ -24,3 +25,4 @@ mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopol
 });
 
 app.use(userAPIs)
+app.use(friendAPIs)

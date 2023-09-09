@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const FriendsDBModel = mongoose.Schema({
-    user: {
+    owner: {
         type: mongoose.Types.ObjectId,
         required: true
     },

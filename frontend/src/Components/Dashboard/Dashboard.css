@@ -160,7 +160,7 @@
   background-color: white;
   border-radius: 25px;
   width: 500px;
-  height: 9vh;
+  height: 11vh;
   margin-top: 250px;
   margin-left: 750px;
   z-index: 1;
@@ -185,6 +185,8 @@
 }
 
 .addfriendInput {
+  position: relative;
+  top: 10px;
   width: 70%;
 }
 
@@ -202,6 +204,8 @@
 
 .addBtn {
   width: 30%;
+  position: relative;
+  top: 10px;
 }
 
 .addBtn > button {
@@ -218,4 +222,20 @@
 
 .addBtn > button:hover {
   background-color: greenyellow;
+}
+
+.AiOutlineClose {
+  position: absolute;
+  font-size: 20px;
+  top: 5px;
+  left: 470px;
+  cursor: pointer;
+}
+
+.AiOutlineClose:hover {
+  scale: 1.1;
+}
+
+.AiOutlineClose:active {
+  color: red;
 }
