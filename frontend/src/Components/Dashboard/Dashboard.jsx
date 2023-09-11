@@ -13,21 +13,23 @@ import { useDispatch, useSelector } from "react-redux";
 import AddFriendModal from "../../Modals/AddFriendModal";
 import { AddFriend, GetFriends } from "../../Redux/FriendsReducer";
 import Loader from "../../Helpers/Loader";
+import { GetAllUsers } from "../../Redux/UserReducer";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [friendData, setFriendData] = useState(new AddFriendModal());
   const [AddFriendToggle, setAddFriendToggle] = useState(false);
-  const AllUsersData = useSelector((state) => state.UserReducer.AllUserData);
-  const FriendList = Object.values(
-    useSelector((state) => state.FriendsReducer.userFriendList)
-  );
+  const AllUserData = useSelector((state) => state.UserReducer.AllUserData);
+  const FriendList = useSelector((state) => state.FriendsReducer.userFriendList);
+
   const [friendListArrival, setFriendListArrival] = useState(true);
 
   useEffect(() => {
-    console.log("Getting Friends");
     TriggerGetFriends();
+    setInterval(() => {
+      dispatch(GetAllUsers())
+    }, 1000);
   }, []);
 
   const logout = async () => {
@@ -56,7 +58,6 @@ const Dashboard = () => {
     dispatch(GetFriends({ uuid: localStorage.uuid })).then((data) => {
       if (data.payload.message === "opSuccess") {
         setFriendListArrival(false);
-        console.log(FriendList[0]);
       } else if (data.payload.message === "opFail") {
         setFriendListArrival(true);
       }
@@ -151,12 +152,10 @@ const Dashboard = () => {
               {friendListArrival ? <Loader /> : <></>}
             </div>
             <div className="friends">
-              {FriendList[0].map((friend, index) => {
-                const matchedFriend = AllUsersData.find(
+              {FriendList.map((friend, index) => {
+                const matchedFriend = AllUserData.find(
                   (user) => user._id === friend.friend
                 );
-
-
                 return (
                   <div className="friendCard" key={index}>
                     <div className="friendAvatar">
@@ -164,15 +163,18 @@ const Dashboard = () => {
                         src={
                           friend.friendAvatar === "none"
                             ? nopp
-                            : `https://192.168.3.194:8009/uploads/${friend.friendUsername}/${friend.friendAvatar}`
+                            : `https://192.168.3.194:8009/userData/${friend.friendUsername}/${friend.friendAvatar}`
                         }
                         alt=""
                       />
                       <GoDotFill
                         className={`GoDotFillFriendList`}
-                        style={matchedFriend && matchedFriend.user_presence === "Online"
-                        ? {color: 'green'}
-                        : {color: 'red'}}
+                        style={
+                          matchedFriend &&
+                          matchedFriend.user_presence === "Online"
+                            ? { color: "green" }
+                            : { color: "red" }
+                        }
                       />
                     </div>
                     <div className="friendUsername">

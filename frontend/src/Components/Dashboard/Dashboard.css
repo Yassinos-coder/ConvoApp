@@ -252,7 +252,6 @@
   width: 96%;
   height: fit-content;
   border-radius: 20px;
-  border: 1px solid gray;
 }
 
 .friendCard {
@@ -262,6 +261,12 @@
   left: 5px;
   gap: 5px;
   cursor: pointer;
+  width: 96%;
+  border-radius: 20px;
+}
+
+.friendCard:hover {
+  background-color: rgba(128, 128, 128, 0.3);
 }
 
 .friendAvatar > img {

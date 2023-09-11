@@ -20,7 +20,7 @@ userAPI.post('/users/newUserCreation', async(req, res) => {
             newUserData.username = newUserData.username.toLowerCase()
             newUserData.email = newUserData.email.toLowerCase()
             newUserData.password = bcrypt.hashSync(newUserData.password, SaltRounds)
-            fs.mkdirSync(`./uploads/${newUserData.username}`, {recursive:true})
+            fs.mkdirSync(`./uploads/userData/${newUserData.username}`, {recursive:true})
             const addUser = new UserModel(newUserData)
             const userData = await addUser.save()
             res.send({

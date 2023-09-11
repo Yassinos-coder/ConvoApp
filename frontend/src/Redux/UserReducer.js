@@ -62,6 +62,16 @@ const UserReducer = createSlice({
             .addCase(UserLogin.rejected, (state, action ) => {
                 state.status = action.payload.message
             })
+            .addCase(GetAllUsers.fulfilled, (state, action ) => {
+                state.AllUserData = action.payload.AllUsers
+                state.status = action.payload.message
+            })
+            .addCase(GetAllUsers.pending, (state ) => {
+                state.status = 'pendingGetAllUsers'
+            })
+            .addCase(GetAllUsers.rejected, (state, action ) => {
+                state.status = action.payload.message
+            })
     }
 
 })

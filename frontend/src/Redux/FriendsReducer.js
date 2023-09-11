@@ -33,7 +33,7 @@ const FriendsReducer = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(AddFriend.fulfilled, (state, action) => {
-        state.userFriendList = [...state.userFriendList, action.payload]
+        state.userFriendList = [...state.userFriendList, action.payload.userFriendList]
         state.status = 'accepted'
     })
     .addCase(AddFriend.pending, (state, action) => {
@@ -43,8 +43,7 @@ const FriendsReducer = createSlice({
         state.status = 'rejected'
     })
     .addCase(GetFriends.fulfilled, (state, action) => {
-      state.userFriendList = action.payload
-      console.log(state.userFriendList)
+      state.userFriendList = action.payload.userFriendList
       state.status = 'accepted'
   })
   .addCase(GetFriends.pending, (state) => {
