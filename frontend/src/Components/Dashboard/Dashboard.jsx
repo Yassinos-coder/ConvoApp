@@ -34,7 +34,9 @@ const Dashboard = () => {
 
   const SendAddFriend = () => {
     dispatch(AddFriend({friendData: friendData})).then((data) => {
-      
+      if(data.length > 0) {
+        setAddFriendToggle(false)
+      }
     });
   };
 
