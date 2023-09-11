@@ -19,10 +19,20 @@ export const UserLogin = createAsyncThunk('users/UserLogin', async({loginData}) 
     }
 })
 
+export const GetAllUsers = createAsyncThunk('users/GetAllUsers', async() => {
+    try {
+        const response = await AxiosConfig.get('/users/GetAllUsers')
+        return response.data
+    } catch (err) {
+        console.warn(`Error in GetAllUsers Reducer ${err}`)
+    }
+})
+
 const UserReducer = createSlice({
     name: 'UserHandler',
     initialState : {
         userData: [],
+        AllUserData: [],
         userToken: '',
         status: '',
         error: '',
@@ -32,6 +42,7 @@ const UserReducer = createSlice({
         builder 
             .addCase(AddNewUser.fulfilled, (state, action ) => {
                 state.userData = action.payload.userData
+                state.AllUserData = [...state.AllUserData ,action.payload.userData]
                 state.status = action.payload.message
             })
             .addCase(AddNewUser.pending, (state, action ) => {

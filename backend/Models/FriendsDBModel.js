@@ -9,6 +9,14 @@ const FriendsDBModel = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         required: true
     },
+    friendAvatar: {
+        type: String,
+        required: true
+    },
+    friendUsername : {
+        type: String,
+        required: true
+    },
 })
 
 const FriendsModel = mongoose.model('FriendsList', FriendsDBModel)

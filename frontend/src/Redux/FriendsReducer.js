@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import AxiosConfig from "../Helpers/AxiosConfig";
 
 export const AddFriend = createAsyncThunk(
-  "friedns/AddFriend",
+  "friends/AddFriend",
   async ({ friendData }) => {
     try {
       const response = await AxiosConfig.post("/friends/AddFriend", friendData);
@@ -12,6 +12,15 @@ export const AddFriend = createAsyncThunk(
     }
   }
 );
+
+export const GetFriends = createAsyncThunk('friends/GetFriends', async({uuid}) => {
+  try {
+    const response = await AxiosConfig.get(`/friends/GetFriendList/${uuid}`)
+    return response.data
+  } catch (err) {
+    console.warn(`Error in GetFriends Reducer ${err}`)
+  }
+} )
 
 const FriendsReducer = createSlice({
   name: "FriendsHandler",
@@ -24,7 +33,7 @@ const FriendsReducer = createSlice({
   extraReducers: (builder) => {
     builder
     .addCase(AddFriend.fulfilled, (state, action) => {
-        state.userFriendList = action.payload
+        state.userFriendList = [...state.userFriendList, action.payload]
         state.status = 'accepted'
     })
     .addCase(AddFriend.pending, (state, action) => {
@@ -33,6 +42,17 @@ const FriendsReducer = createSlice({
     .addCase(AddFriend.rejected, (state, action) => {
         state.status = 'rejected'
     })
+    .addCase(GetFriends.fulfilled, (state, action) => {
+      state.userFriendList = action.payload
+      console.log(state.userFriendList)
+      state.status = 'accepted'
+  })
+  .addCase(GetFriends.pending, (state) => {
+      state.status = 'GetFriendsPending'
+  })
+  .addCase(GetFriends.rejected, (state) => {
+      state.status = 'rejected'
+  })
   },
 });
 

@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const UserDBModel = mongoose.Schema({
     avatar: {
         type: String,
-        required: false
+        required: true
     },
     email: {
         type: String,

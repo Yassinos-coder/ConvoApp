@@ -1,6 +1,7 @@
 
 class SignupModal {
-    constructor(username='', email='', password='', user_presence ='none' ,date_of_creation= ''){
+    constructor(avatar ='none',username='', email='', password='', user_presence ='none' ,date_of_creation= ''){
+        this.avatar = avatar
         this.username = username
         this.email = email
         this.password = password

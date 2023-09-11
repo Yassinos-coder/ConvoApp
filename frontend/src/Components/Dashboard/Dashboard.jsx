@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Outlet, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import nopp from "../../Assets/Images/nopp.png";
 import { GoDotFill } from "react-icons/go";
 import { FiSettings } from "react-icons/fi";
@@ -8,15 +9,26 @@ import { BiLogOut } from "react-icons/bi";
 import AxiosConfig from "../../Helpers/AxiosConfig";
 import { BsPersonFillAdd } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AddFriendModal from "../../Modals/AddFriendModal";
-import { AddFriend } from "../../Redux/FriendsReducer";
+import { AddFriend, GetFriends } from "../../Redux/FriendsReducer";
+import Loader from "../../Helpers/Loader";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [friendData, setFriendData] = useState(new AddFriendModal());
   const [AddFriendToggle, setAddFriendToggle] = useState(false);
+  const AllUsersData = useSelector((state) => state.UserReducer.AllUserData);
+  const FriendList = Object.values(
+    useSelector((state) => state.FriendsReducer.userFriendList)
+  );
+  const [friendListArrival, setFriendListArrival] = useState(true);
+
+  useEffect(() => {
+    console.log("Getting Friends");
+    TriggerGetFriends();
+  }, []);
 
   const logout = async () => {
     try {
@@ -33,9 +45,20 @@ const Dashboard = () => {
   };
 
   const SendAddFriend = () => {
-    dispatch(AddFriend({friendData: friendData})).then((data) => {
-      if(data.length > 0) {
-        setAddFriendToggle(false)
+    dispatch(AddFriend({ friendData: friendData })).then((data) => {
+      if (data.length > 0) {
+        setAddFriendToggle(false);
+      }
+    });
+  };
+
+  const TriggerGetFriends = () => {
+    dispatch(GetFriends({ uuid: localStorage.uuid })).then((data) => {
+      if (data.payload.message === "opSuccess") {
+        setFriendListArrival(false);
+        console.log(FriendList[0]);
+      } else if (data.payload.message === "opFail") {
+        setFriendListArrival(true);
       }
     });
   };
@@ -55,7 +78,13 @@ const Dashboard = () => {
             type="text"
             name="friendInput"
             placeholder="Ex: Yassinos"
-            onChange={(e) => setFriendData({ ...friendData, owner: localStorage.uuid, friend: e.currentTarget.value})}
+            onChange={(e) =>
+              setFriendData({
+                ...friendData,
+                owner: localStorage.uuid,
+                friend: e.currentTarget.value,
+              })
+            }
           />
         </div>
         <div className="addBtn">
@@ -118,6 +147,41 @@ const Dashboard = () => {
                 style={AddFriendToggle ? { cursor: "not-allowed" } : {}}
               />
             </h3>
+            <div className="loadingFriends">
+              {friendListArrival ? <Loader /> : <></>}
+            </div>
+            <div className="friends">
+              {FriendList[0].map((friend, index) => {
+                const matchedFriend = AllUsersData.find(
+                  (user) => user._id === friend.friend
+                );
+
+
+                return (
+                  <div className="friendCard" key={index}>
+                    <div className="friendAvatar">
+                      <img
+                        src={
+                          friend.friendAvatar === "none"
+                            ? nopp
+                            : `https://192.168.3.194:8009/uploads/${friend.friendUsername}/${friend.friendAvatar}`
+                        }
+                        alt=""
+                      />
+                      <GoDotFill
+                        className={`GoDotFillFriendList`}
+                        style={matchedFriend && matchedFriend.user_presence === "Online"
+                        ? {color: 'green'}
+                        : {color: 'red'}}
+                      />
+                    </div>
+                    <div className="friendUsername">
+                      <h3> {friend.friendUsername} </h3>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="rightBar">

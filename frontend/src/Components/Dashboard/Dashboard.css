@@ -239,3 +239,46 @@
 .AiOutlineClose:active {
   color: red;
 }
+
+.loadingFriends {
+  position: absolute;
+  top: 150px;
+  left: 50px;
+  z-index: 1;
+}
+
+.friends {
+  position: relative;
+  width: 96%;
+  height: fit-content;
+  border-radius: 20px;
+  border: 1px solid gray;
+}
+
+.friendCard {
+  position: relative;
+  display: flex;
+  top: 2px;
+  left: 5px;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.friendAvatar > img {
+  width: 50px;
+  cursor: pointer;
+  border-radius: 500px;
+  overflow: hidden;
+}
+
+.friendUsername {
+  position: relative;
+  top: 5px;
+}
+
+.GoDotFillFriendList {
+  position: absolute;
+  font-size: 25px;
+  left: 30px;
+  top: 30px;
+}

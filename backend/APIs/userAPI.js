@@ -20,6 +20,7 @@ userAPI.post('/users/newUserCreation', async(req, res) => {
             newUserData.username = newUserData.username.toLowerCase()
             newUserData.email = newUserData.email.toLowerCase()
             newUserData.password = bcrypt.hashSync(newUserData.password, SaltRounds)
+            fs.mkdirSync(`./uploads/${newUserData.username}`, {recursive:true})
             const addUser = new UserModel(newUserData)
             const userData = await addUser.save()
             res.send({
@@ -28,7 +29,7 @@ userAPI.post('/users/newUserCreation', async(req, res) => {
             })
         }
     } catch (err) {
-        console.error(`Error in newUserCreation API => ${err}`)
+        console.warn(`Error in newUserCreation API => ${err}`)
         res.send({
             message: 'ErrorTryAgain'
         })
@@ -59,7 +60,7 @@ userAPI.post('/users/login', async(req,res) => {
         }
 
     } catch (err) {
-        console.error(`Error in Login API ${err}`)
+        console.warn(`Error in Login API ${err}`)
         res.send({
             message:'ErrorTryAgain'
         })
@@ -72,8 +73,33 @@ userAPI.post('/users/changeStatus/:uuid', Gate ,async(req, res) => {
         await UserModel.updateOne({_id: uuid}, {user_presence: 'Offline'})
         res.send({message: 'OpSuccess'})
     } catch (err) {
-        console.error(`Error in changeStatus API ${err} `)
+        console.warn(`Error in changeStatus API ${err} `)
         res.send({message: 'OpFailed'})
+    }
+})
+
+userAPI.get('/users/GetUserStatus/:username', Gate, async(req, res) => {
+    let username = req.params.uuid
+    try {
+        const result = await UserModel.findOne({username: username})
+        res.send({
+            message: 'opSuccess',
+            userStatus : result.user_presence
+        })
+    } catch (err) {
+        console.warn(`Error in GetUserStatus API ${err}`)
+    }
+})
+
+userAPI.get('/users/GetAllUsers', Gate, async(req, res) => {
+    try {
+        const result = await UserModel.find({}, '_id user_presence');
+        res.send({
+            message: 'opSuccess',
+            AllUsers: result
+        })        
+    } catch (err) {
+        console.warn(`Error in GetAllUsers API ${err}`)
     }
 })
 

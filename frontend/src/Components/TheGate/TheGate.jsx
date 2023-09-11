@@ -4,10 +4,11 @@ import { useState } from "react";
 import SignupModal from "../../Modals/SignupModal";
 import LoginModal from "../../Modals/LoginModal";
 import { useDispatch, useSelector } from "react-redux";
-import { AddNewUser, UserLogin } from "../../Redux/UserReducer";
+import { AddNewUser, GetAllUsers, UserLogin } from "../../Redux/UserReducer";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../Helpers/Loader";
 import Notification from "../../Helpers/Notification";
+import { GetFriends } from "../../Redux/FriendsReducer";
 
 const TheGate = () => {
   const dispatch = useDispatch();
@@ -47,10 +48,12 @@ const TheGate = () => {
           localStorage.setItem("username", data.payload.userData.username);
           localStorage.setItem("user_presence", "Online");
           navigate(`/Dashboard/${localStorage.getItem("uuid")}`);
+          dispatch(GetAllUsers())
+          dispatch(GetFriends({ uuid: localStorage.uuid }))
         } else if (data.payload.message === "wrongPass!") {
           setNotifWrongPass(true);
         } else if (data.payload.message === "ErrorTryAgain") {
-          setSysError(true)
+          setSysError(true);
         }
       })
       .catch((err) => {
@@ -87,7 +90,7 @@ const TheGate = () => {
           <div className="input-group">
             <label className="label">Username</label>
             <input
-              autoComplete="off"
+              autoComplete="username"
               name="Username"
               className="input"
               type="text"
@@ -99,7 +102,7 @@ const TheGate = () => {
           <div className="input-group">
             <label className="label">Email address</label>
             <input
-              autoComplete="off"
+              autoComplete="email"
               name="Email"
               className="input"
               type="email"
@@ -116,7 +119,7 @@ const TheGate = () => {
           <div className="input-group">
             <label className="label">Password</label>
             <input
-              autoComplete="off"
+              autoComplete="new-password"
               name="password"
               className="input"
               type="password"
