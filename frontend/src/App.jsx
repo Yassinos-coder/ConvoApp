@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import TheGate from "./Components/TheGate/TheGate";
 import PrivateRoutes from "./PrivateRoutes";
 import Dashboard from "./Components/Dashboard/Dashboard";
+import ConvoDashMain from "./Components/ConvoDash/ConvoDashMain";
 import ConvoDash from "./Components/ConvoDash/ConvoDash";
 
 function App() {
@@ -21,7 +22,8 @@ function App() {
           <Route path="/TheGate" element={<TheGate />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/Dashboard/:uuid/" element={<Dashboard />}>
-              <Route index element={<ConvoDash />} />
+              <Route index element={<ConvoDashMain />} />
+              <Route path="ConvoDash/:friendID" element={<ConvoDash />} />
             </Route>
           </Route>
         </Routes>

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import React, { useEffect, useState } from "react";
 import nopp from "../../Assets/Images/nopp.png";
@@ -157,6 +157,7 @@ const Dashboard = () => {
                   (user) => user._id === friend.friend
                 );
                 return (
+                  <Link to={`ConvoDash/${friend.friend}`} key={index} state={{data: friend, matchedFriend: matchedFriend}}>
                   <div className="friendCard" key={index}>
                     <div className="friendAvatar">
                       <img
@@ -181,6 +182,7 @@ const Dashboard = () => {
                       <h3> {friend.friendUsername} </h3>
                     </div>
                   </div>
+                  </Link>
                 );
               })}
             </div>

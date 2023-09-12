@@ -1,11 +1,15 @@
 import "./ConvoDash.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import nopp from "../../Assets/Images/nopp.png";
 import { FaTrashAlt } from "react-icons/fa";
 import { IoIosCall } from "react-icons/io";
 import { MdVideoCall } from "react-icons/md";
 import { BsSendFill, BsUpload } from "react-icons/bs";
 import { GoDotFill } from "react-icons/go";
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { GetMessages, SendMessage } from "../../Redux/MessageReducer";
+import MessageModal from "../../Modals/MessageModal";
 
 const ConvoDash = () => {
   const today = new Date();
@@ -22,20 +26,47 @@ const ConvoDash = () => {
   ];
   const dayIndex = today.getDay();
   const dayName = daysOfWeek[dayIndex];
+  const location = useLocation();
+  const friendData = location.state.data;
+  const friendPresence = location.state.matchedFriend;
+  const dispatch = useDispatch();
+  const [newMassage, setNewMessage] = useState(new MessageModal());
+  const userMessages = useSelector(
+    (state) => state.MessageReducer.userMessages
+  );
+
+  useEffect(() => {
+    let fetchData = {
+      from: friendData.owner,
+      to: friendData.friend,
+    };
+    dispatch(GetMessages({ fetchData }));
+  });
+
+  const TriggerSendMessage = () => {
+    dispatch(SendMessage({ dataDM: newMassage }));
+  };
 
   return (
     <div className="ConvoDash">
       <div className="headerConvoDash">
         <div className="friendLogo">
-          <img src={nopp} alt="Logo" />
+          <img
+            src={
+              friendData.friendAvatar === "none"
+                ? nopp
+                : `https://192.168.3.194:8009/userData/${friendData.friendUsername}/${friendData.friendAvatar}`
+            }
+            alt="Logo"
+          />
         </div>
         <div className="friendName">
           <h3>
-            mbennani
+            {friendData.friendUsername}
             <GoDotFill
               className="GoDotFill"
               style={
-                localStorage.user_presence === "Online"
+                friendPresence.user_presence === "Online"
                   ? { color: "green" }
                   : { color: "red" }
               }
@@ -56,29 +87,32 @@ const ConvoDash = () => {
       </div>
       <div className="ConvoBody">
         <p>{`${dayName}, ${hours}:${minutes}`}</p>
-
-        <div className="messages">
-          <div className="logo">
-            <img src={nopp} alt="" />
-          </div>
-          <div className="textMessage">
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Purus
-              faucibus ornare suspendisse sed nisi lacus sed viverra tellus. Leo
-              a diam sollicitudin tempor id eu nisl nunc mi. Id aliquet risus
-              feugiat in ante metus dictum at. Purus sit amet luctus venenatis
-              lectus magna. Pellentesque diam volutpat commodo sed egestas.
-              Natoque penatibus et magnis dis parturient montes nascetur
-              ridiculus. Facilisis sed odio morbi quis commodo. Sit amet dictum
-              sit amet justo donec enim diam vulputate. Magna etiam tempor orci
-              eu. Eu tincidunt tortor aliquam nulla facilisi cras fermentum
-              odio. Dignissim sodales ut eu sem integer vitae. Senectus et netus
-              et malesuada fames ac turpis egestas integer. Vulputate ut
-              pharetra sit amet. Diam sit amet nisl suscipit adipiscing
-              bibendum.
-            </p>
-          </div>
+        <div className="mainDivMessages">
+          {userMessages.map((message, index) => {
+            return (
+              <>
+                <div
+                  key={index}
+                  className={
+                    message.from === localStorage.uuid
+                      ? "messageDIVFromMe"
+                      : "messageDIVFromOther"
+                  }
+                >
+                  <img
+                    src={
+                      friendData.friendAvatar === "none"
+                        ? nopp
+                        : `https://192.168.3.194:8009/userData/${friendData.friendUsername}/${friendData.friendAvatar}`
+                    }
+                    className="logo"
+                    alt=""
+                  />
+                  <p>{message.message}</p>
+                </div>
+              </>
+            );
+          })}
         </div>
       </div>
       <div className="ConvoFooter">
@@ -88,10 +122,19 @@ const ConvoDash = () => {
               type="text"
               name="message"
               placeholder="Type your message..."
+              onChange={(e) => {
+                setNewMessage({
+                  ...newMassage,
+                  from: localStorage.uuid,
+                  to: friendData.friend,
+                  message: e.currentTarget.value,
+                  date_of_message: `${dayName}, ${hours}:${minutes}`,
+                });
+              }}
             />
           </div>
           <div className="messageActions">
-            <BsSendFill className="BsSendFill" />
+            <BsSendFill className="BsSendFill" onClick={TriggerSendMessage} />
             <BsUpload className="BsUpload" />
           </div>
         </div>

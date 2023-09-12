@@ -46,20 +46,22 @@ friendAPI.post("/friends/AddFriend", Gate, async (req, res) => {
   }
 });
 
-friendAPI.get('/friends/GetFriendList/:uuid', Gate, async(req, res) => {
-  let uuid = req.params.uuid
+friendAPI.get("/friends/GetFriendList/:uuid", Gate, async (req, res) => {
+  let uuid = req.params.uuid;
   try {
-    const FriendList = await FriendsModel.find({owner: uuid})
+    const FriendList = await FriendsModel.find({
+      owner: uuid
+    });
     res.send({
       userFriendList: FriendList,
-      message: 'opSuccess'
-    })
+      message: "opSuccess",
+    });
   } catch (err) {
-    console.warn(`Error in GetFriendList API ${err}`)
+    console.warn(`Error in GetFriendList API ${err}`);
     res.send({
-      message: 'opFail'
-    })
+      message: "opFail",
+    });
   }
-})
+});
 
 module.exports = friendAPI;

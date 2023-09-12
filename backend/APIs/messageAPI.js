@@ -8,7 +8,12 @@ messageAPI.get("/dms/GetMessages/:from/:to", Gate, async (req, res) => {
   let from = req.params.from;
   let to = req.params.to;
   try {
-    const messagesData = await MessageModel.find({ from: from, to: to });
+    const messagesData = await MessageModel.find({
+      $or: [
+        { from: from, to: to },
+        { from: to, to: from },
+      ],
+    });
     res.send({
       messagesData: messagesData,
       message: "opSuccess",
