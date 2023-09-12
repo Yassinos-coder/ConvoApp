@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../../Helpers/Loader";
 import Notification from "../../Helpers/Notification";
 import { GetFriends } from "../../Redux/FriendsReducer";
+import wrongPassEffect from "../../Assets/Sounds/wrongPass.mp3";
 
 const TheGate = () => {
   const dispatch = useDispatch();
@@ -42,16 +43,21 @@ const TheGate = () => {
     dispatch(UserLogin({ loginData: newLogin }))
       .then((data) => {
         if (data.payload.giveAccess === true) {
+
           localStorage.setItem("user_status", "connected");
           localStorage.setItem("bigKey", data.payload.userToken);
           localStorage.setItem("uuid", data.payload.userData._id);
           localStorage.setItem("username", data.payload.userData.username);
           localStorage.setItem("user_presence", "Online");
           navigate(`/Dashboard/${localStorage.getItem("uuid")}`);
-          dispatch(GetAllUsers())
-          dispatch(GetFriends({ uuid: localStorage.uuid }))
+          dispatch(GetAllUsers());
+          dispatch(GetFriends({ uuid: localStorage.uuid }));
         } else if (data.payload.message === "wrongPass!") {
           setNotifWrongPass(true);
+          const audioElement = document.getElementById("wrongPassAudio");
+          if (audioElement) {
+            audioElement.play();
+          }
         } else if (data.payload.message === "ErrorTryAgain") {
           setSysError(true);
         }
@@ -63,6 +69,10 @@ const TheGate = () => {
 
   return (
     <div className="TheGate">
+      <audio id="wrongPassAudio">
+        <source src={wrongPassEffect} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
       {userCreatedSuccess ? (
         <Notification message="Account Created Successfuly !" type="success" />
       ) : (

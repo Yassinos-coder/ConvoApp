@@ -91,7 +91,7 @@ userAPI.get('/users/GetUserStatus/:username', Gate, async(req, res) => {
     }
 })
 
-userAPI.get('/users/GetAllUsers', Gate, async(req, res) => {
+userAPI.get('/users/GetAllUsers', async(req, res) => {
     try {
         const result = await UserModel.find({}, '_id user_presence');
         res.send({
