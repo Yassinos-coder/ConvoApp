@@ -263,6 +263,7 @@
   cursor: pointer;
   width: 96%;
   border-radius: 20px;
+  margin-bottom: 10px;
 }
 
 .friendCard:hover {
@@ -274,6 +275,8 @@
   cursor: pointer;
   border-radius: 500px;
   overflow: hidden;
+  position: relative;
+  top: 2px;
 }
 
 .friendUsername {

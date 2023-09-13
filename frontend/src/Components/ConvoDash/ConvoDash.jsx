@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import "./ConvoDash.css";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import nopp from "../../Assets/Images/nopp.png";
 import { FaTrashAlt } from "react-icons/fa";
 import { IoIosCall } from "react-icons/io";
@@ -8,8 +9,13 @@ import { BsSendFill, BsUpload } from "react-icons/bs";
 import { GoDotFill } from "react-icons/go";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { GetMessages, SendMessage } from "../../Redux/MessageReducer";
+import {
+  GetMessages,
+  PurgeMessages,
+  SendMessage,
+} from "../../Redux/MessageReducer";
 import MessageModal from "../../Modals/MessageModal";
+import Loader from "../../Helpers/Loader";
 
 const ConvoDash = () => {
   const today = new Date();
@@ -34,17 +40,36 @@ const ConvoDash = () => {
   const userMessages = useSelector(
     (state) => state.MessageReducer.userMessages
   );
+  const [gettingMessagesLoader, setGettingMessagesLoader] = useState(true);
 
   useEffect(() => {
     let fetchData = {
       from: friendData.owner,
       to: friendData.friend,
     };
-    dispatch(GetMessages({ fetchData }));
+    dispatch(GetMessages({ fetchData })).then((data) => {
+      if (data.payload.message === "opSuccess") {
+        setGettingMessagesLoader(false);
+      } else {
+        setGettingMessagesLoader(true);
+      }
+    });
   });
 
   const TriggerSendMessage = () => {
-    dispatch(SendMessage({ dataDM: newMassage }));
+    dispatch(SendMessage({ dataDM: newMassage })).then((data) => {
+      if (data.payload.message === 'opSuccess') {
+        setNewMessage({...newMassage, message: ''})
+      }
+    });
+  };
+
+  const TriggerPurgeMessages = () => {
+    let purgeData = {
+      from: localStorage.uuid,
+      to: window.location.href.split("/")[6],
+    };
+    dispatch(PurgeMessages({ purgeData: purgeData }));
   };
 
   return (
@@ -81,12 +106,19 @@ const ConvoDash = () => {
             <MdVideoCall className="MdVideoCall" />
           </div>
           <div className="deleteFriend">
-            <FaTrashAlt className="FaTrashAlt" />
+            <FaTrashAlt className="FaTrashAlt" onClick={TriggerPurgeMessages} />
           </div>
         </div>
       </div>
       <div className="ConvoBody">
         <p>{`${dayName}, ${hours}:${minutes}`}</p>
+        {gettingMessagesLoader ? (
+          <div className="loaderConvoDashDMs">
+            <Loader />
+          </div>
+        ) : (
+          ""
+        )}
         <div className="mainDivMessages">
           {userMessages.map((message, index) => {
             return (
@@ -108,7 +140,18 @@ const ConvoDash = () => {
                     className="logo"
                     alt=""
                   />
-                  <p>{message.message}</p>
+                  <p>
+                    {message.message}{" "}
+                    <span
+                      className={
+                        message.from === localStorage.uuid
+                          ? "date_of_messageME"
+                          : "date_of_messageOther"
+                      }
+                    >
+                      {message.date_of_message}
+                    </span>
+                  </p>
                 </div>
               </>
             );
@@ -118,20 +161,29 @@ const ConvoDash = () => {
       <div className="ConvoFooter">
         <div className="inputArea">
           <div className="textInput">
-            <input
-              type="text"
-              name="message"
-              placeholder="Type your message..."
-              onChange={(e) => {
-                setNewMessage({
-                  ...newMassage,
-                  from: localStorage.uuid,
-                  to: friendData.friend,
-                  message: e.currentTarget.value,
-                  date_of_message: `${dayName}, ${hours}:${minutes}`,
-                });
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                TriggerSendMessage();
               }}
-            />
+            >
+              <input
+                type="text"
+                name="message"
+                placeholder="Type your message..."
+                onChange={(e) => {
+                  setNewMessage({
+                    ...newMassage,
+                    from: localStorage.uuid,
+                    to: friendData.friend,
+                    message: e.currentTarget.value,
+                    date_of_message: `${hours}:${minutes}`,
+                  });
+                  
+                }}
+                value={newMassage.message}
+              />
+            </form>
           </div>
           <div className="messageActions">
             <BsSendFill className="BsSendFill" onClick={TriggerSendMessage} />

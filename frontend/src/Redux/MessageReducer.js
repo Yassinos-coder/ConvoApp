@@ -67,7 +67,7 @@ const MessageReducer = createSlice({
         state.status = action.payload.message;
       })
       .addCase(SendMessage.pending, (state) => {
-        state.status = "GetMessagesPending";
+        state.status = "SendMessagePending";
       })
       .addCase(SendMessage.rejected, (state) => {
         state.status = "rejected";
@@ -80,7 +80,7 @@ const MessageReducer = createSlice({
         state.status = action.payload.message;
       })
       .addCase(PurgeMessages.pending, (state) => {
-        state.status = "GetMessagesPending";
+        state.status = "PurgeMessagesPending";
       })
       .addCase(PurgeMessages.rejected, (state) => {
         state.status = "rejected";
