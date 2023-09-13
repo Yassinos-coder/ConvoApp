@@ -7,6 +7,7 @@ import PrivateRoutes from "./PrivateRoutes";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import ConvoDashMain from "./Components/ConvoDash/ConvoDashMain";
 import ConvoDash from "./Components/ConvoDash/ConvoDash";
+import AccountSettings from "./Components/AccountSettings/AccountSettings";
 
 function App() {
   useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path="/Dashboard/:uuid/" element={<Dashboard />}>
               <Route index element={<ConvoDashMain />} />
+              <Route path="AccountSettings/:userid"  element={<AccountSettings />}/>
               <Route path="ConvoDash/:friendID" element={<ConvoDash />} />
             </Route>
           </Route>

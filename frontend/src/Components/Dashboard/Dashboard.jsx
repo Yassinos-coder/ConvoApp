@@ -21,14 +21,16 @@ const Dashboard = () => {
   const [friendData, setFriendData] = useState(new AddFriendModal());
   const [AddFriendToggle, setAddFriendToggle] = useState(false);
   const AllUserData = useSelector((state) => state.UserReducer.AllUserData);
-  const FriendList = useSelector((state) => state.FriendsReducer.userFriendList);
+  const FriendList = useSelector(
+    (state) => state.FriendsReducer.userFriendList
+  );
 
   const [friendListArrival, setFriendListArrival] = useState(true);
 
   useEffect(() => {
     TriggerGetFriends();
     setInterval(() => {
-      dispatch(GetAllUsers())
+      dispatch(GetAllUsers());
     }, 1000);
   }, []);
 
@@ -125,7 +127,9 @@ const Dashboard = () => {
                 </p>
               </div>
               <div className="settingsBtn">
-                <FiSettings className="FiSettings" />
+                <Link to={`AccountSettings/${localStorage.uuid}`}>
+                  <FiSettings className="FiSettings" />
+                </Link>
               </div>
               <div className="logout">
                 <BiLogOut
@@ -157,31 +161,35 @@ const Dashboard = () => {
                   (user) => user._id === friend.friend
                 );
                 return (
-                  <Link to={`ConvoDash/${friend.friend}`} key={index} state={{data: friend, matchedFriend: matchedFriend}}>
-                  <div className="friendCard" key={index}>
-                    <div className="friendAvatar">
-                      <img
-                        src={
-                          friend.friendAvatar === "none"
-                            ? nopp
-                            : `https://192.168.3.194:8009/userData/${friend.friendUsername}/${friend.friendAvatar}`
-                        }
-                        alt=""
-                      />
-                      <GoDotFill
-                        className={`GoDotFillFriendList`}
-                        style={
-                          matchedFriend &&
-                          matchedFriend.user_presence === "Online"
-                            ? { color: "green" }
-                            : { color: "red" }
-                        }
-                      />
+                  <Link
+                    to={`ConvoDash/${friend.friend}`}
+                    key={index}
+                    state={{ data: friend, matchedFriend: matchedFriend }}
+                  >
+                    <div className="friendCard" key={index}>
+                      <div className="friendAvatar">
+                        <img
+                          src={
+                            friend.friendAvatar === "none"
+                              ? nopp
+                              : `https://192.168.3.194:8009/userData/${friend.friendUsername}/${friend.friendAvatar}`
+                          }
+                          alt=""
+                        />
+                        <GoDotFill
+                          className={`GoDotFillFriendList`}
+                          style={
+                            matchedFriend &&
+                            matchedFriend.user_presence === "Online"
+                              ? { color: "green" }
+                              : { color: "red" }
+                          }
+                        />
+                      </div>
+                      <div className="friendUsername">
+                        <h3> {friend.friendUsername} </h3>
+                      </div>
                     </div>
-                    <div className="friendUsername">
-                      <h3> {friend.friendUsername} </h3>
-                    </div>
-                  </div>
                   </Link>
                 );
               })}

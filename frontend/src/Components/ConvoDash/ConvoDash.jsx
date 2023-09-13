@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import "./ConvoDash.css";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import nopp from "../../Assets/Images/nopp.png";
 import { FaTrashAlt } from "react-icons/fa";
 import { IoIosCall } from "react-icons/io";
@@ -58,8 +58,8 @@ const ConvoDash = () => {
 
   const TriggerSendMessage = () => {
     dispatch(SendMessage({ dataDM: newMassage })).then((data) => {
-      if (data.payload.message === 'opSuccess') {
-        setNewMessage({...newMassage, message: ''})
+      if (data.payload.message === "opSuccess") {
+        setNewMessage({ ...newMassage, message: "" });
       }
     });
   };
@@ -179,7 +179,6 @@ const ConvoDash = () => {
                     message: e.currentTarget.value,
                     date_of_message: `${hours}:${minutes}`,
                   });
-                  
                 }}
                 value={newMassage.message}
               />

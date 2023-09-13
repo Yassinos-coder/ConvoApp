@@ -50,7 +50,7 @@ friendAPI.get("/friends/GetFriendList/:uuid", Gate, async (req, res) => {
   let uuid = req.params.uuid;
   try {
     const FriendList = await FriendsModel.find({
-      owner: uuid
+      owner: uuid,
     });
     res.send({
       userFriendList: FriendList,
@@ -58,6 +58,21 @@ friendAPI.get("/friends/GetFriendList/:uuid", Gate, async (req, res) => {
     });
   } catch (err) {
     console.warn(`Error in GetFriendList API ${err}`);
+    res.send({
+      message: "opFail",
+    });
+  }
+});
+
+friendAPI.get("/friends/DeleteAllFriends/:userid", Gate, async (req, res) => {
+  let uuid = req.params.userid;
+  try {
+    await FriendsModel.deleteMany({ $or: [{ owner: uuid }, { friend: uuid }] });
+    res.send({
+      message: "opSuccess",
+    });
+  } catch (err) {
+    console.warn(`Error in DeleteFriends API ${err}`);
     res.send({
       message: "opFail",
     });
