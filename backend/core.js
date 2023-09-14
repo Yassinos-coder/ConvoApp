@@ -41,6 +41,10 @@ const httpsOptions = {
 
 const server = https.createServer(httpsOptions, app);
 
+app.get('/', async(req,res) => {
+  res.send('True')
+})
+
 server.listen(process.env.BACK_END, () => {
   console.info(`Back-End Convo Started Successfully on port => ${process.env.BACK_END}!`);
 });
