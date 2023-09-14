@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const AxiosConfig = axios.create({
-    baseURL: 'https://192.168.3.194:8009/',
+    baseURL: 'https://571rc2t5-8009.uks1.devtunnels.ms/',
 })
 
 AxiosConfig.interceptors.request.use(

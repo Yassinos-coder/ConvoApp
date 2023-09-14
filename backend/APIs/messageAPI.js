@@ -35,7 +35,6 @@ messageAPI.post("/dms/SendMessage", Gate, async (req, res) => {
       newMessageData: newMessageData,
       message: "opSuccess",
     });
-    console.log(newMessageData)
   } catch (err) {
     console.warn(`Error in SendMessage API ${err}`);
     res.send({
