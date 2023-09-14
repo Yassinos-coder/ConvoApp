@@ -35,14 +35,14 @@ app.use(messageAPI);
 
 // Load the SSL certificate files
 const httpsOptions = {
-  key: fs.readFileSync('certs/192.168.3.194-key.pem'),
-  cert: fs.readFileSync('certs/192.168.3.194.pem')
+  key: fs.readFileSync('./certs/192.168.3.194-key.pem'),
+  cert: fs.readFileSync('./certs/192.168.3.194.pem')
 };
 
 const server = https.createServer(httpsOptions, app);
 
-app.get('/', async(req,res) => {
-  res.send('TrueS')
+app.get('/', async(req, res) => {
+  res.send('True')
 })
 
 server.listen(process.env.BACK_END, () => {
