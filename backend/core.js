@@ -42,7 +42,7 @@ const httpsOptions = {
 const server = https.createServer(httpsOptions, app);
 
 app.get('/', async(req,res) => {
-  res.send('True')
+  res.send('TrueS')
 })
 
 server.listen(process.env.BACK_END, () => {
