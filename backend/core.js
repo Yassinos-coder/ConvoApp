@@ -35,8 +35,8 @@ app.use(messageAPI);
 
 // Load the SSL certificate files
 const httpsOptions = {
-  key: fs.readFileSync('./certs/192.168.3.194-key.pem'),
-  cert: fs.readFileSync('./certs/192.168.3.194.pem')
+  key: fs.readFileSync('certs/192.168.3.194-key.pem'),
+  cert: fs.readFileSync('certs/192.168.3.194.pem')
 };
 
 const server = https.createServer(httpsOptions, app);
