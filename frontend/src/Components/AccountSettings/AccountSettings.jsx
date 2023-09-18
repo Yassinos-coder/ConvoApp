@@ -1,28 +1,32 @@
 import "./AccountSettings.css";
 import React, { useRef, useState } from "react";
 import { FiSettings } from "react-icons/fi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import nopp from "../../Assets/Images/nopp.png";
 import { FaPenToSquare } from "react-icons/fa6";
 import AxiosConfig from "../../Helpers/AxiosConfig";
 import Notification from "../../Helpers/Notification";
+import { uploadProfilePicture } from "../../Redux/UserReducer";
 
 const AccountSettings = () => {
   const dataFromRedux = useSelector((state) => state.UserReducer.userData)
-  const userData = dataFromRedux ? dataFromRedux : sessionStorage.getItem('userData') 
+  const userData =  JSON.stringify(dataFromRedux) === '{}' ? sessionStorage.getItem('userData') : dataFromRedux  
   const [modifyUsername, setUsernameModify] = useState(false);
   const [modifyEmail, setEmailModify] = useState(false);
   const [modifyPassword, setPasswordModify] = useState(false);
   let inputFile = useRef();
   const [deleteAvatarFail, setDeleteAvatarFail] = useState(false);
   const [deleteFriendsFail, setDeleteFriendsFail] = useState(false);
-
+  const dispatch = useDispatch()
   const OpenFileUploader = () => {
     inputFile.click();
   };
 
   const captureUploadedFile = (e) => {
     const file = e.currentTarget.files[0];
+    const picture = new FormData()
+    picture.append('picture', file)
+    dispatch(uploadProfilePicture({uuid: localStorage.uuid, picture: picture}))
   };
 
   const TriggerAvatarDelete = () => {
@@ -81,7 +85,7 @@ const AccountSettings = () => {
             src={
               userData.avatar === "none"
                 ? nopp
-                : `https://192.168.3.194:8009/userData/${userData.username}/${userData.username}`
+                : `http://192.168.3.194:8009/userData/${userData.username}/${userData.avatar}`
             }
             alt=""
           />

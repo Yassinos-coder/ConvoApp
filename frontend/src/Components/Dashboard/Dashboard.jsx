@@ -24,7 +24,11 @@ const Dashboard = () => {
   const FriendList = useSelector(
     (state) => state.FriendsReducer.userFriendList
   );
-
+  const dataFromRedux = useSelector((state) => state.UserReducer.userData);
+  const userData =
+    JSON.stringify(dataFromRedux) === "{}"
+      ? sessionStorage.getItem("userData")
+      : dataFromRedux;
   const [friendListArrival, setFriendListArrival] = useState(true);
 
   useEffect(() => {
@@ -99,7 +103,12 @@ const Dashboard = () => {
           <div className="LeftBarHeader">
             <div className="LeftBarheaderContent">
               <div className="userLogo">
-                <img src={nopp} alt="" />
+                <img
+                  src={
+                    userData.avatar === "none" ? nopp : `http://192.168.3.194:8009/userData/${userData.username}/${userData.avatar}`
+                  }
+                  alt=""
+                />
               </div>
               <div className="username">
                 <p>
@@ -172,7 +181,7 @@ const Dashboard = () => {
                           src={
                             friend.friendAvatar === "none"
                               ? nopp
-                              : `https://192.168.3.194:8009/userData/${friend.friendUsername}/${friend.friendAvatar}`
+                              : `http://192.168.3.194:8009/userData/${friend.friendUsername}/${friend.friendAvatar}`
                           }
                           alt=""
                         />

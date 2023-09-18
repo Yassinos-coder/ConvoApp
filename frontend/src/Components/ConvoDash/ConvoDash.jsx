@@ -80,7 +80,7 @@ const ConvoDash = () => {
             src={
               friendData.friendAvatar === "none"
                 ? nopp
-                : `https://192.168.3.194:8009/userData/${friendData.friendUsername}/${friendData.friendAvatar}`
+                : `http://192.168.3.194:8009/userData/${friendData.friendUsername}/${friendData.friendAvatar}`
             }
             alt="Logo"
           />
@@ -135,7 +135,7 @@ const ConvoDash = () => {
                     src={
                       friendData.friendAvatar === "none"
                         ? nopp
-                        : `https://192.168.3.194:8009/userData/${friendData.friendUsername}/${friendData.friendAvatar}`
+                        : `http://192.168.3.194:8009/userData/${friendData.friendUsername}/${friendData.friendAvatar}`
                     }
                     className="logo"
                     alt=""

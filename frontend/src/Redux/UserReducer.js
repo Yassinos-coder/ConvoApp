@@ -28,6 +28,15 @@ export const GetAllUsers = createAsyncThunk('users/GetAllUsers', async() => {
     }
 })
 
+export const uploadProfilePicture = createAsyncThunk('users/uploadProfilePicture', async({picture, uuid}) => {
+    try {
+        const response = await AxiosConfig.post(`/users/UpdateProfilePicture/${uuid}`,picture)
+        return response.data
+    } catch (err) {
+        console.warn(`Error in uploadProfilePicture Reducer ${err}`)
+    }
+})
+
 const UserReducer = createSlice({
     name: 'UserHandler',
     initialState : {
@@ -72,6 +81,16 @@ const UserReducer = createSlice({
                 state.status = 'pendingGetAllUsers'
             })
             .addCase(GetAllUsers.rejected, (state, action ) => {
+                state.status = action.payload.message
+            })
+            .addCase(uploadProfilePicture.fulfilled, (state, action ) => {
+                state.userData = action.payload.userData
+                state.status = action.payload.message
+            })
+            .addCase(uploadProfilePicture.pending, (state ) => {
+                state.status = 'pendingUploadProfilePicture'
+            })
+            .addCase(uploadProfilePicture.rejected, (state, action ) => {
                 state.status = action.payload.message
             })
     }

@@ -127,4 +127,38 @@ userAPI.get("/users/DeleteAvatar/:userid", Gate, async (req, res) => {
   }
 });
 
+userAPI.post('/users/UpdateProfilePicture/:uuid', Gate, async(req, res) => {
+  let uuid = req.params.uuid
+  let newPicture = req.files.picture
+  try {
+    const userData = await UserModel.findOne({ _id: uuid });
+    const dirUserpath = `./uploads/userData/${userData.username}/`;
+    if (!fs.existsSync(dirUserpath)) {
+      fs.mkdirSync(dirUserpath);
+    }
+    let SplitnewPictureName = newPicture.name.split(".");
+    SplitnewPictureName = `${userData._id}.${SplitnewPictureName[1]}`;
+    newPicture.name = SplitnewPictureName;
+    let saveToPath = `./uploads/userData/${userData.username}/${newPicture.name}`;
+    newPicture.mv(saveToPath, async (err) => {
+      if (err) {
+        console.error(`Error in mv Func ${err}`);
+        res.send({
+          message: "opFail",
+        });
+      } else {
+        await UserModel.updateOne({ _id: uuid }, { avatar: newPicture.name });
+        const userDataUpdated = await UserModel.findOne({_id: uuid})
+        res.send({
+          userData: userDataUpdated,
+          message: "opSuccess",
+        });
+      }
+    });
+  } catch (err) {
+    console.warn(`Error in UpdateProfilePicture API ${err}`)
+    res.send({message:'opFail'})
+  }
+})
+
 module.exports = userAPI;
