@@ -7,6 +7,7 @@ import { FaPenToSquare } from "react-icons/fa6";
 import AxiosConfig from "../../Helpers/AxiosConfig";
 import Notification from "../../Helpers/Notification";
 import { uploadProfilePicture } from "../../Redux/UserReducer";
+import { useNavigate } from "react-router-dom";
 
 const AccountSettings = () => {
   const dataFromRedux = useSelector((state) => state.UserReducer.userData)
@@ -18,6 +19,9 @@ const AccountSettings = () => {
   const [deleteAvatarFail, setDeleteAvatarFail] = useState(false);
   const [deleteFriendsFail, setDeleteFriendsFail] = useState(false);
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+
   const OpenFileUploader = () => {
     inputFile.click();
   };
@@ -52,6 +56,16 @@ const AccountSettings = () => {
       })
       .catch((err) => console.warn(`Error in DeleteAvatar API CALL ${err}`));
   };
+
+  const TriggerDeleteAccount = () => {
+    AxiosConfig.get(`/users/DeleteAccount/${localStorage.uuid}`).then((response) => {
+      if (response.data.message === 'opSuccess') {
+        navigate('/TheGate')
+      } else {
+        alert('Something went wrong ! Try Again ')
+      }
+    })
+  }
 
   return (
     <div className="AccountSettings">
@@ -183,7 +197,7 @@ const AccountSettings = () => {
           </div>
           <div className="action5">
             <button onClick={TriggerFriendsDelete}>Remove All Friends</button>
-            <button>Delete Account</button>
+            <button onClick={TriggerDeleteAccount}>Delete Account</button>
           </div>
         </div>
       </div>

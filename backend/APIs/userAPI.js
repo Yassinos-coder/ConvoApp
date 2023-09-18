@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const fs = require("fs");
 const SaltRounds = 10;
 const { Gate } = require("../Helpers/apiAUTH");
+const FriendsModel = require("../Models/FriendsDBModel");
 
 const userAPI = Router();
 
@@ -127,6 +128,26 @@ userAPI.get("/users/DeleteAvatar/:userid", Gate, async (req, res) => {
   }
 });
 
+userAPI.get('/users/DeleteAccount/:uuid', Gate, async(req, res) => {
+  let uuid = req.params.uuid
+  try {
+    const userData = await UserModel.findOne({ _id: uuid });
+    await FriendsModel.deleteMany({
+      $or: [
+        { owner: uuid },
+        { friend: uuid },
+      ],
+    });
+    await UserModel.deleteOne({ _id: uuid });
+    let path = `./uploads/userData/${userData.username}`;
+    fs.rmSync(path, { recursive: true, force: true });
+    res.send({ message: "opSuccess" });
+  } catch (err) {
+    console.warn(`Error in DeleteAccount API ${err}`)
+    res.send({ message: "opFail" });
+  }
+})
+
 userAPI.post('/users/UpdateProfilePicture/:uuid', Gate, async(req, res) => {
   let uuid = req.params.uuid
   let newPicture = req.files.picture
@@ -148,6 +169,7 @@ userAPI.post('/users/UpdateProfilePicture/:uuid', Gate, async(req, res) => {
         });
       } else {
         await UserModel.updateOne({ _id: uuid }, { avatar: newPicture.name });
+        await FriendsModel.updateOne({ friend: uuid }, { friendAvatar: newPicture.name });
         const userDataUpdated = await UserModel.findOne({_id: uuid})
         res.send({
           userData: userDataUpdated,
