@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
-
 const userAPIs = require("./APIs/userAPI");
 const friendAPIs = require("./APIs/friendsAPI");
 const messageAPI = require("./APIs/messageAPI");

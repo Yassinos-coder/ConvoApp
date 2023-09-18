@@ -42,6 +42,7 @@ const UserReducer = createSlice({
         builder 
             .addCase(AddNewUser.fulfilled, (state, action ) => {
                 state.userData = action.payload.userData
+                sessionStorage.setItem('userData', action.payload.userData)
                 state.AllUserData = [...state.AllUserData ,action.payload.userData]
                 state.status = action.payload.message
             })
@@ -53,6 +54,7 @@ const UserReducer = createSlice({
             })
             .addCase(UserLogin.fulfilled, (state, action ) => {
                 state.userData = action.payload.userData
+                sessionStorage.setItem('userData', JSON.stringify(action.payload.userData))
                 state.userToken = action.payload.userToken
                 state.status = action.payload.message
             })

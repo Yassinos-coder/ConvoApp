@@ -8,7 +8,8 @@ import AxiosConfig from "../../Helpers/AxiosConfig";
 import Notification from "../../Helpers/Notification";
 
 const AccountSettings = () => {
-  const userData = useSelector((state) => state.UserReducer.userData);
+  const dataFromRedux = useSelector((state) => state.UserReducer.userData)
+  const userData = dataFromRedux ? dataFromRedux : sessionStorage.getItem('userData') 
   const [modifyUsername, setUsernameModify] = useState(false);
   const [modifyEmail, setEmailModify] = useState(false);
   const [modifyPassword, setPasswordModify] = useState(false);
