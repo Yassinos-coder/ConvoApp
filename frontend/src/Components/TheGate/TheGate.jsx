@@ -52,7 +52,7 @@ const TheGate = () => {
           navigate(`/Dashboard/${localStorage.getItem("uuid")}`);
           dispatch(GetAllUsers());
           dispatch(GetFriends({ uuid: localStorage.uuid }));
-        } else if (data.payload.message === "wrongPass!") {
+        } else if (data.payload.message === "wrongPass!" || data.payload.message === "userNoExist") {
           setNotifWrongPass(true);
           const audioElement = document.getElementById("wrongPassAudio");
           if (audioElement) {
@@ -79,7 +79,7 @@ const TheGate = () => {
         ""
       )}
       {wrongPass ? (
-        <Notification message="Wrong Password Try Again!" type="danger" />
+        <Notification message="Wrong Username / Password Try Again!" type="danger" />
       ) : (
         ""
       )}

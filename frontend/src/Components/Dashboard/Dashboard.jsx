@@ -8,7 +8,7 @@ import { FiSettings } from "react-icons/fi";
 import { BiLogOut } from "react-icons/bi";
 import AxiosConfig from "../../Helpers/AxiosConfig";
 import { BsPersonFillAdd } from "react-icons/bs";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiFillHome, AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import AddFriendModal from "../../Modals/AddFriendModal";
 import { AddFriend, GetFriends } from "../../Redux/FriendsReducer";
@@ -59,9 +59,9 @@ const Dashboard = () => {
   const SendAddFriend = () => {
     dispatch(AddFriend({ friendData: friendData })).then((data) => {
       if (data.length > 0) {
-        setAddFriendToggle(false);
       }
     });
+    setAddFriendToggle(false);
   };
 
   const TriggerGetFriends = () => {
@@ -136,6 +136,11 @@ const Dashboard = () => {
                     ? "Online"
                     : "Offline"}
                 </p>
+              </div>
+              <div className="HomeBtn">
+                <Link to={`/Dashboard/${localStorage.uuid}`}>
+                    <AiFillHome className="AiFillHome"/>
+                </Link>
               </div>
               <div className="settingsBtn">
                 <Link to={`AccountSettings/${localStorage.uuid}`}>

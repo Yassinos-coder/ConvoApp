@@ -91,12 +91,40 @@
   top: 5px;
 }
 
+.HomeBtn {
+  position: relative;
+  background-color: rgba(128, 128, 128, 0.5);
+  font-size: 20px;
+  border-radius: 500px;
+  left: 10px;
+  width: 40px;
+  height: 30px;
+  top: 10px;
+}
+
+.HomeBtn > a > .AiFillHome {
+  position: relative;
+  left: 10px;
+  top: 5px;
+}
+
+.AiFillHome:hover {
+  cursor: pointer;
+  scale: 1.1;
+  color: rgb(0, 204, 255);
+}
+
+.HomeBtn > a {
+  text-decoration: none;
+  color: initial;
+}
+
 .settingsBtn {
   position: relative;
   background-color: rgba(128, 128, 128, 0.5);
   font-size: 20px;
   border-radius: 500px;
-  left: 15px;
+  left: 18px;
   width: 40px;
   height: 30px;
   top: 10px;
@@ -108,7 +136,7 @@
   top: 5px;
 }
 
-.settingsBtn:hover {
+.FiSettings:hover {
   cursor: pointer;
   scale: 1.1;
   color: yellow;

@@ -34,6 +34,7 @@ const FriendsReducer = createSlice({
     builder
     .addCase(AddFriend.fulfilled, (state, action) => {
         state.userFriendList = [...state.userFriendList, action.payload.userFriendList]
+        console.log(state.userFriendList)
         state.status = 'accepted'
     })
     .addCase(AddFriend.pending, (state, action) => {
