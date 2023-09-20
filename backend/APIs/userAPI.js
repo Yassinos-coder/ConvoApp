@@ -11,10 +11,10 @@ const userAPI = Router();
 
 userAPI.post("/users/newUserCreation", async (req, res) => {
   let newUserData = req.body;
-  newUserData.username = (newUserData.username).toLowerCase()
+  newUserData.username = newUserData.username.toLowerCase();
   try {
     const DoesUserAlreadyExists = await UserModel.findOne({
-      username: newUserData.username,
+      username: newUserData.username, // Removed $eq here
     });
     if (DoesUserAlreadyExists) {
       res.send({
@@ -44,10 +44,10 @@ userAPI.post("/users/newUserCreation", async (req, res) => {
 
 userAPI.post("/users/login", async (req, res) => {
   let loginData = req.body;
-  loginData.username = (loginData.username).toLowerCase()
+  loginData.username = loginData.username.toLowerCase();
   try {
     const DoesUserAlreadyExists = await UserModel.findOne({
-      username: loginData.username,
+      username: loginData.username, // Removed $eq here
     });
     if (DoesUserAlreadyExists) {
       let result = bcrypt.compareSync(
@@ -96,7 +96,7 @@ userAPI.post("/users/changeStatus/:uuid", Gate, async (req, res) => {
 });
 
 userAPI.get("/users/GetUserStatus/:username", Gate, async (req, res) => {
-  let username = req.params.uuid;
+  let username = req.params.username;
   try {
     const result = await UserModel.findOne({ username: username });
     res.send({
@@ -130,29 +130,26 @@ userAPI.get("/users/DeleteAvatar/:userid", Gate, async (req, res) => {
   }
 });
 
-userAPI.get('/users/DeleteAccount/:uuid', Gate, async(req, res) => {
-  let uuid = req.params.uuid
+userAPI.get("/users/DeleteAccount/:uuid", Gate, async (req, res) => {
+  let uuid = req.params.uuid;
   try {
     const userData = await UserModel.findOne({ _id: uuid });
     await FriendsModel.deleteMany({
-      $or: [
-        { owner: uuid },
-        { friend: uuid },
-      ],
+      $or: [{ owner: uuid }, { friend: uuid }],
     });
     await UserModel.deleteOne({ _id: uuid });
     let path = `./uploads/userData/${userData.username}`;
     fs.rmSync(path, { recursive: true, force: true });
     res.send({ message: "opSuccess" });
   } catch (err) {
-    console.warn(`Error in DeleteAccount API ${err}`)
+    console.warn(`Error in DeleteAccount API ${err}`);
     res.send({ message: "opFail" });
   }
-})
+});
 
-userAPI.post('/users/UpdateProfilePicture/:uuid', Gate, async(req, res) => {
-  let uuid = req.params.uuid
-  let newPicture = req.files.picture
+userAPI.post("/users/UpdateProfilePicture/:uuid", Gate, async (req, res) => {
+  let uuid = req.params.uuid;
+  let newPicture = req.files.picture;
   try {
     const userData = await UserModel.findOne({ _id: uuid });
     const dirUserpath = `./uploads/userData/${userData.username}/`;
@@ -171,8 +168,11 @@ userAPI.post('/users/UpdateProfilePicture/:uuid', Gate, async(req, res) => {
         });
       } else {
         await UserModel.updateOne({ _id: uuid }, { avatar: newPicture.name });
-        await FriendsModel.updateOne({ friend: uuid }, { friendAvatar: newPicture.name });
-        const userDataUpdated = await UserModel.findOne({_id: uuid})
+        await FriendsModel.updateOne(
+          { friend: uuid },
+          { friendAvatar: newPicture.name }
+        );
+        const userDataUpdated = await UserModel.findOne({ _id: uuid });
         res.send({
           userData: userDataUpdated,
           message: "opSuccess",
@@ -180,65 +180,75 @@ userAPI.post('/users/UpdateProfilePicture/:uuid', Gate, async(req, res) => {
       }
     });
   } catch (err) {
-    console.warn(`Error in UpdateProfilePicture API ${err}`)
-    res.send({message:'opFail'})
+    console.warn(`Error in UpdateProfilePicture API ${err}`);
+    res.send({ message: "opFail" });
   }
-})
+});
 
-userAPI.post('/users/UpdateUsername/:uuid', Gate, async(req, res) => {
-  let uuid = req.params.uuid
-  let username = req.body
-  username.username = (username.username).toLowerCase()
+userAPI.post("/users/UpdateUsername/:uuid", Gate, async (req, res) => {
+  let uuid = req.params.uuid;
+  let username = req.body;
+  username.username = username.username.toLowerCase();
   try {
-    await UserModel.updateOne({_id: uuid}, {username: username.username})
-    const newUserDataAfterUpdate = await UserModel.findOne({_id: uuid})
+    await UserModel.updateOne(
+      { _id: { $eq: uuid } }, // Correct usage of $eq for comparison
+      { username: username.username }
+    );
+    const newUserDataAfterUpdate = await UserModel.findOne({ _id: uuid });
     res.send({
       userData: newUserDataAfterUpdate,
-      message:'opSuccess'
-    })
+      message: "opSuccess",
+    });
   } catch (err) {
-    console.warn(`Error in UpdateUsername API ${err}`)
+    console.warn(`Error in UpdateUsername API ${err}`);
     res.send({
-      message:'opFail'
-    })
+      message: "opFail",
+    });
   }
-})
+});
 
-userAPI.post('/users/UpdateEmail/:uuid', Gate, async(req, res) => {
-  let uuid = req.params.uuid
-  let email = req.body
+userAPI.post("/users/UpdateEmail/:uuid", Gate, async (req, res) => {
+  let uuid = req.params.uuid;
+  let email = req.body;
   try {
-    await UserModel.updateOne({_id: uuid}, {email: email.email})
-    const newUserDataAfterUpdate = await UserModel.findOne({_id: uuid})
+    await UserModel.updateOne({ _id: { $eq: uuid } }, { email: email.email });
+    const newUserDataAfterUpdate = await UserModel.findOne({
+      _id: { $eq: uuid },
+    });
     res.send({
       userData: newUserDataAfterUpdate,
-      message:'opSuccess'
-    })
+      message: "opSuccess",
+    });
   } catch (err) {
-    console.warn(`Error in UpdateEmail API ${err}`)
+    console.warn(`Error in UpdateEmail API ${err}`);
     res.send({
-      message:'opFail'
-    })
+      message: "opFail",
+    });
   }
-})
+});
 
-userAPI.post('/users/UpdatePassword/:uuid', Gate, async(req, res) => {
-  let uuid = req.params.uuid
-  let password = req.body
+userAPI.post("/users/UpdatePassword/:uuid", Gate, async (req, res) => {
+  let uuid = req.params.uuid;
+  let password = req.body;
   try {
     password = bcrypt.hashSync(password, SaltRounds);
-    await UserModel.updateOne({_id: uuid}, {password: password.password})
-    const newUserDataAfterUpdate = await UserModel.findOne({_id: uuid})
+    await UserModel.updateOne(
+      { _id: { $eq: uuid } }, // Correct usage of $eq for comparison
+      { password: password.password }
+    );
+    const newUserDataAfterUpdate = await UserModel.findOne({
+      _id: { $eq: uuid },
+    });
     res.send({
       userData: newUserDataAfterUpdate,
-      message:'opSuccess'
-    })
+      message: "opSuccess",
+    });
   } catch (err) {
-    console.warn(`Error in UpdatePassword API ${err}`)
+    console.warn(`Error in UpdatePassword API ${err}`);
     res.send({
-      message:'opFail'
-    })
+      message: "opFail",
+    });
   }
-})
+});
 
 module.exports = userAPI;

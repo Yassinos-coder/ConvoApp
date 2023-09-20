@@ -9,21 +9,21 @@ friendAPI.post("/friends/AddFriend", Gate, async (req, res) => {
   try {
     // Below we get the userData for the friend
     let newFriendDataWithId = await UserModel.findOne({
-      username: friendData.friend,
+      username: friendData.friend, // Removed $eq here
     });
     // Below we get the userData of the user that added that friend
     let newFriendDataWithIdToTheOtherSide = await UserModel.findOne({
-      _id: friendData.owner,
+      _id: friendData.owner, // Removed $eq here
     });
     // Below we check if they are already friends
     const DoesFriendAlreadyExist = await FriendsModel.findOne({
       owner: friendData.owner,
-      friend: newFriendDataWithId._id,
+      friend: newFriendDataWithId._id, // Removed $eq here
     });
     // The check must be done
     const DoesFriendAlreadyExistOtherSide = await FriendsModel.findOne({
       owner: newFriendDataWithId._id,
-      friend: friendData.owner,
+      friend: friendData.owner, // Removed $eq here
     });
     if (DoesFriendAlreadyExist && DoesFriendAlreadyExistOtherSide) {
       res.send({ message: "friendExists" });
@@ -31,14 +31,14 @@ friendAPI.post("/friends/AddFriend", Gate, async (req, res) => {
       res.send({ message: "friendExists" });
     } else {
       const newFriendToAdd = new FriendsModel({
-        owner: friendData.owner,
-        friend: newFriendDataWithId._id,
+        owner: friendData.owner, // Removed $eq here
+        friend: newFriendDataWithId._id, // Removed $eq here
         friendAvatar: newFriendDataWithId.avatar,
         friendUsername: newFriendDataWithId.username,
       });
       const newFriendToAddOtherSide = new FriendsModel({
-        owner: newFriendDataWithId._id,
-        friend: friendData.owner,
+        owner: newFriendDataWithId._id, // Removed $eq here
+        friend: friendData.owner, // Removed $eq here
         friendAvatar: newFriendDataWithIdToTheOtherSide.avatar,
         friendUsername: newFriendDataWithIdToTheOtherSide.username,
       });
@@ -47,7 +47,7 @@ friendAPI.post("/friends/AddFriend", Gate, async (req, res) => {
     }
     const userFriendList = await FriendsModel.findOne({
       owner: friendData.owner,
-      friend: newFriendDataWithId._id
+      friend: newFriendDataWithId._id, // Removed $eq here
     });
     res.send({
       userFriendList: userFriendList,
