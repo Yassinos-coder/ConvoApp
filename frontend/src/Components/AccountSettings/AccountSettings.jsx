@@ -6,8 +6,14 @@ import nopp from "../../Assets/Images/nopp.png";
 import { FaPenToSquare } from "react-icons/fa6";
 import AxiosConfig from "../../Helpers/AxiosConfig";
 import Notification from "../../Helpers/Notification";
-import { uploadProfilePicture } from "../../Redux/UserReducer";
+import {
+  UpdateEmail,
+  UpdatePassword,
+  UpdateUsername,
+  uploadProfilePicture,
+} from "../../Redux/UserReducer";
 import { useNavigate } from "react-router-dom";
+import { BsFillCheckSquareFill } from "react-icons/bs";
 
 const AccountSettings = () => {
   const dataFromRedux = useSelector((state) => state.UserReducer.userData);
@@ -23,6 +29,10 @@ const AccountSettings = () => {
   const [deleteFriendsFail, setDeleteFriendsFail] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [newUsername, setNewUsername] = useState();
+  const [newEmail, setNewEmail] = useState();
+  const [newPassword, setNewPassword] = useState();
 
   const OpenFileUploader = () => {
     inputFile.click();
@@ -133,6 +143,7 @@ const AccountSettings = () => {
                 type="text"
                 name="new-username"
                 placeholder="Enter a username"
+                onChange={(e) => setNewUsername({username: e.currentTarget.value})}
               />
             ) : (
               <input
@@ -148,7 +159,19 @@ const AccountSettings = () => {
                 className="FaPenToSquare"
                 onClick={() => setUsernameModify(!modifyUsername)}
               />
-              : Modify Username
+              :{" "}
+              <BsFillCheckSquareFill
+                className="FaPenToSquare save"
+                onClick={() => {
+                  console.log(newUsername)
+                  dispatch(
+                    UpdateUsername({
+                      username: newUsername,
+                      uuid: userData._id,
+                    })
+                  );
+                }}
+              />
             </span>
           </div>
           <div className="action3">
@@ -158,6 +181,7 @@ const AccountSettings = () => {
                 type="email"
                 name="email"
                 placeholder="Enter an email"
+                onChange={(e) => setNewEmail({email: e.currentTarget.value})}
               />
             ) : (
               <input
@@ -165,7 +189,7 @@ const AccountSettings = () => {
                 type="email"
                 name="email"
                 disabled
-                value={userData.email}
+                value={dataFromRedux.email}
               />
             )}{" "}
             <span>
@@ -173,7 +197,18 @@ const AccountSettings = () => {
                 className="FaPenToSquare"
                 onClick={() => setEmailModify(!modifyEmail)}
               />
-              : Modify Email
+              :{" "}
+              <BsFillCheckSquareFill
+                className="FaPenToSquare save"
+                onClick={() => {
+                  dispatch(
+                    UpdateEmail({
+                      email: newEmail,
+                      uuid: userData._id,
+                    })
+                  );
+                }}
+              />
             </span>
           </div>
           <div className="action4">
@@ -183,6 +218,7 @@ const AccountSettings = () => {
                 type="password"
                 name="new-password"
                 placeholder="Enter a password"
+                onChange={(e) => setNewPassword({password: e.currentTarget.value})}
               />
             ) : (
               <input
@@ -198,7 +234,18 @@ const AccountSettings = () => {
                 className="FaPenToSquare"
                 onClick={() => setPasswordModify(!modifyPassword)}
               />
-              : Modify Password
+              :{" "}
+              <BsFillCheckSquareFill
+                className="FaPenToSquare save"
+                onClick={() => {
+                  dispatch(
+                    UpdatePassword({
+                      password: newPassword,
+                      uuid: userData._id,
+                    })
+                  );
+                }}
+              />
             </span>
           </div>
           <div className="action5">

@@ -11,6 +11,7 @@ const userAPI = Router();
 
 userAPI.post("/users/newUserCreation", async (req, res) => {
   let newUserData = req.body;
+  newUserData.username = (newUserData.username).toLowerCase()
   try {
     const DoesUserAlreadyExists = await UserModel.findOne({
       username: newUserData.username,
@@ -43,6 +44,7 @@ userAPI.post("/users/newUserCreation", async (req, res) => {
 
 userAPI.post("/users/login", async (req, res) => {
   let loginData = req.body;
+  loginData.username = (loginData.username).toLowerCase()
   try {
     const DoesUserAlreadyExists = await UserModel.findOne({
       username: loginData.username,
@@ -180,6 +182,62 @@ userAPI.post('/users/UpdateProfilePicture/:uuid', Gate, async(req, res) => {
   } catch (err) {
     console.warn(`Error in UpdateProfilePicture API ${err}`)
     res.send({message:'opFail'})
+  }
+})
+
+userAPI.post('/users/UpdateUsername/:uuid', Gate, async(req, res) => {
+  let uuid = req.params.uuid
+  let username = req.body
+  username.username = (username.username).toLowerCase()
+  try {
+    await UserModel.updateOne({_id: uuid}, {username: username.username})
+    const newUserDataAfterUpdate = await UserModel.findOne({_id: uuid})
+    res.send({
+      userData: newUserDataAfterUpdate,
+      message:'opSuccess'
+    })
+  } catch (err) {
+    console.warn(`Error in UpdateUsername API ${err}`)
+    res.send({
+      message:'opFail'
+    })
+  }
+})
+
+userAPI.post('/users/UpdateEmail/:uuid', Gate, async(req, res) => {
+  let uuid = req.params.uuid
+  let email = req.body
+  try {
+    await UserModel.updateOne({_id: uuid}, {email: email.email})
+    const newUserDataAfterUpdate = await UserModel.findOne({_id: uuid})
+    res.send({
+      userData: newUserDataAfterUpdate,
+      message:'opSuccess'
+    })
+  } catch (err) {
+    console.warn(`Error in UpdateEmail API ${err}`)
+    res.send({
+      message:'opFail'
+    })
+  }
+})
+
+userAPI.post('/users/UpdatePassword/:uuid', Gate, async(req, res) => {
+  let uuid = req.params.uuid
+  let password = req.body
+  try {
+    password = bcrypt.hashSync(password, SaltRounds);
+    await UserModel.updateOne({_id: uuid}, {password: password.password})
+    const newUserDataAfterUpdate = await UserModel.findOne({_id: uuid})
+    res.send({
+      userData: newUserDataAfterUpdate,
+      message:'opSuccess'
+    })
+  } catch (err) {
+    console.warn(`Error in UpdatePassword API ${err}`)
+    res.send({
+      message:'opFail'
+    })
   }
 })
 

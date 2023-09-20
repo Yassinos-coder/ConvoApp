@@ -1,125 +1,135 @@
 .AccountSettings {
-    position: relative;
-    width: 100%;
-    height: 70vh;
+  position: relative;
+  width: 100%;
+  height: 70vh;
 }
 
 .AccountSettingsHeader {
-    background: url(../../Assets/Images/settingsHeader.jpg);
-    background-size: cover;
-    height: 15vh;
-    overflow: hidden;
-    border-top-right-radius: 20px;
+  background: url(../../Assets/Images/settingsHeader.jpg);
+  background-size: cover;
+  height: 15vh;
+  overflow: hidden;
+  border-top-right-radius: 20px;
 }
 
 .AccountSettingsHeader > h2 {
-    position: relative;
-    top: 100px;
-    left: 10px;
+  position: relative;
+  top: 100px;
+  left: 10px;
 }
 
 .AccountSettingsHeader > h2 > .FiSettings {
-    position: relative;
-    top: 4px;
+  position: relative;
+  top: 4px;
 }
 
 .panel {
-    position: relative;
-    width: 100%;
-    height: 55vh;
-    border-bottom-right-radius: 20px;
-    display: flex;
-    gap: 90px;
-    left: 200px;
-    top: 50px;
+  position: relative;
+  width: 100%;
+  height: 55vh;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  gap: 90px;
+  left: 200px;
+  top: 50px;
 }
 
-
 .userLogoPanel {
-    position: relative;
-    left: 50px;
-    top: 25px;
+  position: relative;
+  left: 50px;
+  top: 25px;
 }
 
 .userLogoPanelIMG {
-    width: 120px;
-    border-radius: 500px;
+  width: 120px;
+  border-radius: 500px;
 }
 
 .userActionsPanel {
-    position: relative;
-    width: 50%;
-    height: 50vh;
-    top: 25px;
+  position: relative;
+  width: 50%;
+  height: 50vh;
+  top: 25px;
 }
 
-.action1, .action2, .action3, .action4, .action5 {
-    position: relative;
-    width: 100%;
-    margin-bottom: 20px;
+.action1,
+.action2,
+.action3,
+.action4,
+.action5 {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
 }
-
 
 .action1 > button {
-    width: 35%;
-    height: 5vh;
-    border-radius: 20px;
-    border: none;
-    background-color: black;
-    color: white;
-    font-size: 20px;
-    margin-right: 20px;
-    cursor: pointer;
+  width: 35%;
+  height: 5vh;
+  border-radius: 20px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  margin-right: 20px;
+  cursor: pointer;
 }
 
 .action1 > button:hover {
-    background-color: white;
-    border: 2px solid black;
-    color: black;
+  background-color: white;
+  border: 2px solid black;
+  color: black;
 }
 
 .inputsSettingsPanel {
-    width: 50%;
-    height: 5vh;
-    border: none;
-    border-radius: 20px;
-    background-color: rgba(128, 128, 128, 0.3);
-    padding: 10px;
-    font-size: 17px;
+  width: 50%;
+  height: 5vh;
+  border: none;
+  border-radius: 20px;
+  background-color: rgba(128, 128, 128, 0.3);
+  padding: 10px;
+  font-size: 17px;
 }
 
 .FaPenToSquare {
-    position: relative;
-    font-size: 25px;
-    top: 2px;
-    left: 10px;
-    margin-right: 10px;
-    cursor: pointer;
+  position: relative;
+  font-size: 25px;
+  top: 2px;
+  left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
 }
 
 .FaPenToSquare:hover {
-    scale: 1.1;
+  scale: 1.1;
+  color: yellow;
+}
+
+.save {
+  font-size: 22px;
+}
+.save:hover {
+  color: green;
 }
 
 .action5 {
-    position: relative;
-    top: 50px;
+  position: relative;
+  top: 50px;
 }
 
 .action5 > button {
-    width: 35%;
-    height: 5vh;
-    border-radius: 20px;
-    border: none;
-    background-color: black;
-    color: white;
-    font-size: 20px;
-    margin-right: 20px;
-    cursor: pointer;
+  width: 35%;
+  height: 5vh;
+  border-radius: 20px;
+  border: none;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  margin-right: 20px;
+  cursor: pointer;
 }
 
 .action5 > button:hover {
-    background-color: white;
-    border: 2px solid black;
-    color: black;
+  background-color: white;
+  border: 2px solid black;
+  color: black;
 }

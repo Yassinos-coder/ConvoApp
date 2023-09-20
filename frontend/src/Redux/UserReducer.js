@@ -52,6 +52,33 @@ export const uploadProfilePicture = createAsyncThunk(
   }
 );
 
+export const UpdateUsername = createAsyncThunk('users/UpdateUsername', async({username, uuid}) => {
+  try {
+    const response = await AxiosConfig.post(`/users/UpdateUsername/${uuid}`,username)
+    return response.data
+  } catch (err) {
+    console.warn(`Error in UpdateUsername Reducer ${err}`)
+  }
+})
+
+export const UpdateEmail = createAsyncThunk('users/UpdateEmail', async({email, uuid}) => {
+  try {
+    const response = await AxiosConfig.post(`/users/UpdateEmail/${uuid}`,email)
+    return response.data
+  } catch (err) {
+    console.warn(`Error in UpdateEmail Reducer ${err}`)
+  }
+})
+
+export const UpdatePassword = createAsyncThunk('users/UpdatePassword', async({password, uuid}) => {
+  try {
+    const response = await AxiosConfig.post(`/users/UpdatePassword/${uuid}`,password)
+    return response.data
+  } catch (err) {
+    console.warn(`Error in UpdatePassword Reducer ${err}`)
+  }
+})
+
 const UserReducer = createSlice({
   name: "UserHandler",
   initialState: {
@@ -113,7 +140,37 @@ const UserReducer = createSlice({
       })
       .addCase(uploadProfilePicture.rejected, (state, action) => {
         state.status = action.payload.message;
-      });
+      })
+      .addCase(UpdateUsername.fulfilled, (state, action) => {
+        state.userData = action.payload.userData;
+        state.status = action.payload.message;
+      })
+      .addCase(UpdateUsername.pending, (state) => {
+        state.status = "pendingUpdateUsername";
+      })
+      .addCase(UpdateUsername.rejected, (state, action) => {
+        state.status = action.payload.message;
+      })
+      .addCase(UpdateEmail.fulfilled, (state, action) => {
+        state.userData = action.payload.userData;
+        state.status = action.payload.message;
+      })
+      .addCase(UpdateEmail.pending, (state) => {
+        state.status = "pendingUpdateEmail";
+      })
+      .addCase(UpdateEmail.rejected, (state, action) => {
+        state.status = action.payload.message;
+      })
+      .addCase(UpdatePassword.fulfilled, (state, action) => {
+        state.userData = action.payload.userData;
+        state.status = action.payload.message;
+      })
+      .addCase(UpdatePassword.pending, (state) => {
+        state.status = "pendingUpdatePassword";
+      })
+      .addCase(UpdatePassword.rejected, (state, action) => {
+        state.status = action.payload.message;
+      })
   },
 });
 
