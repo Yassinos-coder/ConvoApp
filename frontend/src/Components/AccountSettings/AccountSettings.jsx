@@ -10,17 +10,19 @@ import { uploadProfilePicture } from "../../Redux/UserReducer";
 import { useNavigate } from "react-router-dom";
 
 const AccountSettings = () => {
-  const dataFromRedux = useSelector((state) => state.UserReducer.userData)
-  const userData =  JSON.stringify(dataFromRedux) === '{}' ? sessionStorage.getItem('userData') : dataFromRedux  
+  const dataFromRedux = useSelector((state) => state.UserReducer.userData);
+  const userData =
+    JSON.parse(localStorage.getItem("userData")) === "{}"
+      ? dataFromRedux
+      : JSON.parse(localStorage.getItem("userData"));
   const [modifyUsername, setUsernameModify] = useState(false);
   const [modifyEmail, setEmailModify] = useState(false);
   const [modifyPassword, setPasswordModify] = useState(false);
   let inputFile = useRef();
   const [deleteAvatarFail, setDeleteAvatarFail] = useState(false);
   const [deleteFriendsFail, setDeleteFriendsFail] = useState(false);
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const OpenFileUploader = () => {
     inputFile.click();
@@ -28,9 +30,11 @@ const AccountSettings = () => {
 
   const captureUploadedFile = (e) => {
     const file = e.currentTarget.files[0];
-    const picture = new FormData()
-    picture.append('picture', file)
-    dispatch(uploadProfilePicture({uuid: localStorage.uuid, picture: picture}))
+    const picture = new FormData();
+    picture.append("picture", file);
+    dispatch(
+      uploadProfilePicture({ uuid: localStorage.uuid, picture: picture })
+    );
   };
 
   const TriggerAvatarDelete = () => {
@@ -58,14 +62,16 @@ const AccountSettings = () => {
   };
 
   const TriggerDeleteAccount = () => {
-    AxiosConfig.get(`/users/DeleteAccount/${localStorage.uuid}`).then((response) => {
-      if (response.data.message === 'opSuccess') {
-        navigate('/TheGate')
-      } else {
-        alert('Something went wrong ! Try Again ')
+    AxiosConfig.get(`/users/DeleteAccount/${localStorage.uuid}`).then(
+      (response) => {
+        if (response.data.message === "opSuccess") {
+          navigate("/TheGate");
+        } else {
+          alert("Something went wrong ! Try Again ");
+        }
       }
-    })
-  }
+    );
+  };
 
   return (
     <div className="AccountSettings">

@@ -25,14 +25,18 @@ const Dashboard = () => {
     (state) => state.FriendsReducer.userFriendList
   );
   const dataFromRedux = useSelector((state) => state.UserReducer.userData);
-  const userData =
-    JSON.stringify(dataFromRedux) === "{}"
-      ? sessionStorage.getItem("userData")
-      : dataFromRedux;
+  const userData = JSON.parse(localStorage.getItem("userData")) === "{}"
+    ? dataFromRedux
+    : JSON.parse(localStorage.getItem("userData"));
   const [friendListArrival, setFriendListArrival] = useState(true);
-
+  const [UserAvatarSetter, setUserAvatarSetter] = useState(nopp);
   useEffect(() => {
     TriggerGetFriends();
+    setUserAvatarSetter(
+      userData.avatar === "none"
+        ? nopp
+        : `http://192.168.3.194:8009/userData/${userData.username}/${userData.avatar}`
+    );
     setInterval(() => {
       dispatch(GetAllUsers());
     }, 1000);
@@ -104,9 +108,7 @@ const Dashboard = () => {
             <div className="LeftBarheaderContent">
               <div className="userLogo">
                 <img
-                  src={
-                    userData.avatar === "none" ? nopp : `http://192.168.3.194:8009/userData/${userData.username}/${userData.avatar}`
-                  }
+                  src={UserAvatarSetter}
                   alt=""
                 />
               </div>
