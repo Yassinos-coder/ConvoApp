@@ -25,11 +25,13 @@ const Dashboard = () => {
     (state) => state.FriendsReducer.userFriendList
   );
   const dataFromRedux = useSelector((state) => state.UserReducer.userData);
-  const userData = JSON.parse(localStorage.getItem("userData")) === "{}"
-    ? dataFromRedux
-    : JSON.parse(localStorage.getItem("userData"));
+  const userData =
+    JSON.parse(localStorage.getItem("userData")) === "{}"
+      ? dataFromRedux
+      : JSON.parse(localStorage.getItem("userData"));
   const [friendListArrival, setFriendListArrival] = useState(true);
   const [UserAvatarSetter, setUserAvatarSetter] = useState(nopp);
+
   useEffect(() => {
     TriggerGetFriends();
     setUserAvatarSetter(
@@ -107,10 +109,7 @@ const Dashboard = () => {
           <div className="LeftBarHeader">
             <div className="LeftBarheaderContent">
               <div className="userLogo">
-                <img
-                  src={UserAvatarSetter}
-                  alt=""
-                />
+                <img src={UserAvatarSetter} alt="" />
               </div>
               <div className="username">
                 <p>
@@ -139,7 +138,7 @@ const Dashboard = () => {
               </div>
               <div className="HomeBtn">
                 <Link to={`/Dashboard/${localStorage.uuid}`}>
-                    <AiFillHome className="AiFillHome"/>
+                  <AiFillHome className="AiFillHome" />
                 </Link>
               </div>
               <div className="settingsBtn">
@@ -204,6 +203,9 @@ const Dashboard = () => {
                       </div>
                       <div className="friendUsername">
                         <h3> {friend.friendUsername} </h3>
+                        <p>
+                          
+                        </p>
                       </div>
                     </div>
                   </Link>

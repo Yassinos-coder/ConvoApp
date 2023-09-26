@@ -15,6 +15,15 @@ export const GetMessages = createAsyncThunk(
   }
 );
 
+export const GetAllUserDMS = createAsyncThunk('dms/GetAllUserDMS', async({uuid}) => {
+  try {
+    const response = await AxiosConfig.get(`/dms/GetAllUserDMS/${uuid}`)
+    return response.data
+  } catch (err) {
+    console.warn(`Error in GetAllUserDMS Reducer ${err}`)
+  }
+})
+
 export const SendMessage = createAsyncThunk(
   "dms/SendMessage",
   async ({ dataDM }) => {
