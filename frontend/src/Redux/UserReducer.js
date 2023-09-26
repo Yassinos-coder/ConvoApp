@@ -106,7 +106,6 @@ const UserReducer = createSlice({
         const userDataToStore = {
           ...action.payload.userData,
           password: undefined,
-          email: undefined,
         };
         localStorage.setItem(
           "userData",

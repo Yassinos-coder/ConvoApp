@@ -189,7 +189,7 @@ const AccountSettings = () => {
                 type="email"
                 name="email"
                 disabled
-                value={dataFromRedux.email}
+                value={userData.email}
               />
             )}{" "}
             <span>
