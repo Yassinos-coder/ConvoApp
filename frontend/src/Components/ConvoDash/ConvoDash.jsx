@@ -121,6 +121,10 @@ const ConvoDash = () => {
         )}
         <div className="mainDivMessages">
           {userMessages.map((message, index) => {
+            let timeString  = message ? message.date_of_message.split(' ')[4] : '';
+            const dateObject = new Date(`1970-01-01T${timeString}`);
+            let hours = dateObject.getHours()
+            let minutes = dateObject.getMinutes()
             return (
               <>
                 <div
@@ -141,7 +145,7 @@ const ConvoDash = () => {
                     alt=""
                   />
                   <p>
-                    {message.message}{" "}
+                    {message.message}
                     <span
                       className={
                         message.from === localStorage.uuid
@@ -149,7 +153,7 @@ const ConvoDash = () => {
                           : "date_of_messageOther"
                       }
                     >
-                      {message.date_of_message}
+                      {`${hours}:${minutes}`}
                     </span>
                   </p>
                 </div>
@@ -177,7 +181,7 @@ const ConvoDash = () => {
                     from: localStorage.uuid,
                     to: friendData.friend,
                     message: e.currentTarget.value,
-                    date_of_message: `${hours}:${minutes}`,
+                    date_of_message: `${today}`,
                   });
                 }}
                 value={newMassage.message}

@@ -15,12 +15,12 @@ export const GetMessages = createAsyncThunk(
   }
 );
 
-export const GetAllUserDMS = createAsyncThunk('dms/GetAllUserDMS', async({uuid}) => {
+export const GetLastUserDMS = createAsyncThunk('dms/GetLastUserDMS', async({uuid}) => {
   try {
-    const response = await AxiosConfig.get(`/dms/GetAllUserDMS/${uuid}`)
+    const response = await AxiosConfig.get(`/dms/GetLastUserDMS/${uuid}`)
     return response.data
   } catch (err) {
-    console.warn(`Error in GetAllUserDMS Reducer ${err}`)
+    console.warn(`Error in GetLastUserDMS Reducer ${err}`)
   }
 })
 
@@ -52,6 +52,7 @@ const MessageReducer = createSlice({
   name: "MessageHandler",
   initialState: {
     userMessages: [],
+    allLastDMS: [],
     status: "",
     error: "",
   },
@@ -92,6 +93,16 @@ const MessageReducer = createSlice({
         state.status = "PurgeMessagesPending";
       })
       .addCase(PurgeMessages.rejected, (state) => {
+        state.status = "rejected";
+      })
+      .addCase(GetLastUserDMS.fulfilled, (state, action) => {
+        state.allLastDMS = [...state.allLastDMS, action.payload.allLastDMS];
+        state.status = action.payload.message;
+      })
+      .addCase(GetLastUserDMS.pending, (state) => {
+        state.status = "GetLastUserDMSPending";
+      })
+      .addCase(GetLastUserDMS.rejected, (state) => {
         state.status = "rejected";
       });
   },

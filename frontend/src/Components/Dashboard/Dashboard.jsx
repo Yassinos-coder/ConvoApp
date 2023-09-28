@@ -14,6 +14,7 @@ import AddFriendModal from "../../Modals/AddFriendModal";
 import { AddFriend, GetFriends } from "../../Redux/FriendsReducer";
 import Loader from "../../Helpers/Loader";
 import { GetAllUsers } from "../../Redux/UserReducer";
+import { GetLastUserDMS } from "../../Redux/MessageReducer";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ const Dashboard = () => {
     (state) => state.FriendsReducer.userFriendList
   );
   const dataFromRedux = useSelector((state) => state.UserReducer.userData);
+  const LastDM = useSelector((state) => state.MessageReducer.allLastDMS);
+
   const userData =
     JSON.parse(localStorage.getItem("userData")) === "{}"
       ? dataFromRedux
@@ -42,6 +45,7 @@ const Dashboard = () => {
     setInterval(() => {
       dispatch(GetAllUsers());
     }, 1000);
+    dispatch(GetLastUserDMS({ uuid: localStorage.uuid }));
   }, []);
 
   const logout = async () => {
@@ -172,6 +176,7 @@ const Dashboard = () => {
             </div>
             <div className="friends">
               {FriendList.map((friend, index) => {
+                console.log(LastDM)
                 const matchedFriend = AllUserData.find(
                   (user) => user._id === friend.friend
                 );
@@ -203,9 +208,7 @@ const Dashboard = () => {
                       </div>
                       <div className="friendUsername">
                         <h3> {friend.friendUsername} </h3>
-                        <p>
-                          
-                        </p>
+                        <p>{}</p>
                       </div>
                     </div>
                   </Link>

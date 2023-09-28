@@ -64,4 +64,17 @@ messageAPI.post("/dms/purgeData", Gate, async (req, res) => {
   }
 });
 
+messageAPI.get('/dms/GetLastUserDMS/:uuid', Gate, async(req, res) => {
+  let uuid = req.params.uuid
+  try {
+    const dms = await MessageModel.find({to : uuid})
+    res.send({
+      allLastDMS: dms,
+      message:'OpSuccess'
+    })
+  } catch (err) {
+    console.error(`Error in GetLastUserDMS API ${err}`)
+  }
+})
+
 module.exports = messageAPI;
