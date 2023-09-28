@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const AxiosConfig = axios.create({
-    baseURL: 'http://apis.yassinoscoder.codes/',
+    baseURL: 'http://571rc2t5-8009.uks1.devtunnels.ms/',
 })
 
 AxiosConfig.interceptors.request.use(
