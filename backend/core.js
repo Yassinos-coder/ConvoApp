@@ -40,3 +40,16 @@ app.listen(process.env.BACK_END, () => {
     `Back-End Convo Started Successfully on port => ${process.env.BACK_END}!`
   );
 });
+
+app.get('/', (req, res) => {
+  res.send(`
+    <html>
+      <head>
+        <title>Convo BackEnd</title>
+      </head>
+      <body>
+        <h1>GET THE FUCK OUTTA HERE !!!🤬</h1>
+      </body>
+    </html>
+  `);
+});
