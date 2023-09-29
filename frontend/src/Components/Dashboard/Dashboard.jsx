@@ -176,10 +176,10 @@ const Dashboard = () => {
             </div>
             <div className="friends">
               {FriendList.map((friend, index) => {
-                console.log(LastDM)
                 const matchedFriend = AllUserData.find(
                   (user) => user._id === friend.friend
                 );
+
                 return (
                   <Link
                     to={`ConvoDash/${friend.friend}`}
@@ -208,7 +208,15 @@ const Dashboard = () => {
                       </div>
                       <div className="friendUsername">
                         <h3> {friend.friendUsername} </h3>
-                        <p>{}</p>
+                        <p>
+                          {LastDM.map((dms, index) => {
+                            const lastDMFromFriend = dms.find(
+                              (dm) => dm.to === localStorage.uuid
+                            );
+                            return <>{lastDMFromFriend ? lastDMFromFriend.message : ''}</>
+                          })
+                          }
+                        </p>
                       </div>
                     </div>
                   </Link>
