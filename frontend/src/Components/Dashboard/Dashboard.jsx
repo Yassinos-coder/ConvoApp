@@ -209,13 +209,7 @@ const Dashboard = () => {
                       <div className="friendUsername">
                         <h3> {friend.friendUsername} </h3>
                         <p>
-                          {LastDM.map((dms, index) => {
-                            const lastDMFromFriend = dms.find(
-                              (dm) => dm.to === localStorage.uuid
-                            );
-                            return <>{lastDMFromFriend ? lastDMFromFriend.message : ''}</>
-                          })
-                          }
+                          
                         </p>
                       </div>
                     </div>

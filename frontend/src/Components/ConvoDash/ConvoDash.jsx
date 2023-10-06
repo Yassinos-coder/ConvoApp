@@ -121,7 +121,7 @@ const ConvoDash = () => {
         )}
         <div className="mainDivMessages">
           {userMessages.map((message, index) => {
-            let timeString  = message ? message.date_of_message.split(' ')[4] : '';
+            let timeString  = message === '{}' ? ' ' : message.date_of_message.split(' ')[4];
             const dateObject = new Date(`1970-01-01T${timeString}`);
             let hours = dateObject.getHours()
             let minutes = dateObject.getMinutes()
